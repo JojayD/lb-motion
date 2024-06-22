@@ -1,27 +1,31 @@
-// pages/index.js
-import 'regenerator-runtime/runtime';
-import Head from 'next/head';
-import SpeechToText from '../app/components/speechtotext';
+// ./app/page.js
+"use client";
+import { useState, useEffect } from 'react';
+import ClientComponent from "./components/clientcomponent";
+import { fetchAccessToken } from "@humeai/voice";
 
-export default function Home() {
-  return (
-    <div className="min-h-screen flex flex-col justify-center items-center">
-      <Head>
-        <title>Language Trainer</title>
-        <meta name="description" content="A language trainer to improve your English" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default function Page() {
+  const [accessToken, setAccessToken] = useState(null);
 
-      <main className="flex flex-col items-center">
-        <h1 className="text-4xl font-bold mb-8">
-          Welcome to the Language Trainer
-        </h1>
-        <SpeechToText />
-      </main>
+  useEffect(() => {
+    const getAccessToken = async () => {
+      try {
+        const token = await fetchAccessToken({
+          apiKey: process.env.NEXT_PUBLIC_HUME_API_KEY,
+          secretKey: process.env.NEXT_PUBLIC_HUME_SECRET_KEY,
+        });
+        setAccessToken(token);
+      } catch (error) {
+        console.error("Failed to fetch access token:", error);
+      }
+    };
 
-      <footer className="w-full h-24 flex justify-center items-center border-t">
-        Powered by Hume AI and OpenAI
-      </footer>
-    </div>
-  );
+    getAccessToken();
+  }, []);
+
+  if (!accessToken) {
+    return <div>Loading...</div>;
+  }
+
+  return <ClientComponent accessToken={accessToken} />;
 }
