@@ -18,14 +18,16 @@ tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
 model = GPT2LMHeadModel.from_pretrained('gpt2')
 nlp = spacy.load("en_core_web_sm")
 
-@app.route('/recieve_text', methods=['POST'])
+@app.route('/receive_text', methods=['POST'])
 def give_score():
     print("Entered give_score")
 
     if not request.json or 'messages' not in request.json:
         return jsonify({"error": "No messages provided"}), 400
-
+  
     messages = request.json.get('messages', [])
+    
+    print(f'These are the messages', messages)
     try:
         for message in messages:
             doc = nlp(message['content'])
