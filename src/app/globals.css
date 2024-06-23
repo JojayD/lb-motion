@@ -8,13 +8,22 @@
   --background-end-rgb: 255, 255, 255;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: white;
     --background-end-rgb: white;
   }
+} */
+
+@media (prefers-color-scheme: dark) { 
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: black;
+    --background-end-rgb: black;
+  }
 }
+
 
 body {
   color: rgb(var(--foreground-rgb));
@@ -24,6 +33,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  background-color: #BCF8D0; /* This applies the green background */
 }
 
 @layer utilities {

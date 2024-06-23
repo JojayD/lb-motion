@@ -35,7 +35,7 @@ export default function Controls({ messages, onStop }) {
      setIsProcessing(true);
 
 		sendMessagesToBackend(messages);
-    // console.log(localStorage.getItem("selectedLanguage"))
+    console.log(localStorage.getItem("selectedLanguage"))
 		console.log("Stopping conversation. Sending messages:", messages);
     localStorage.removeItem("selectedLanguage");
 		disconnect();

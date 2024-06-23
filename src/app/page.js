@@ -67,6 +67,7 @@ function SignInPage() {
   return (
     <div className="flex h-screen items-center justify-center p-4 bg-green-200">
       {/* Login Form */}
+      
       <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
         <h2 className="text-2xl font-bold text-black">Welcome back</h2>
         <form className="flex flex-col items-center gap-4" onSubmit={handleSignIn}>
