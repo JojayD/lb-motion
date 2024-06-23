@@ -27,7 +27,7 @@ function SignUpPage() {
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-        router.push("/dashboard");
+        router.push("/language");
       }, 2000); // Redirect after 2 seconds
     } catch (error) {
       console.error("Error signing up:", error);

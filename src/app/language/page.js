@@ -5,10 +5,13 @@ import { useRouter } from "next/navigation";
 
 function LanguageSelection() {
   const [isOpen, setIsOpen] = useState(false);
+  const [language, setLanguage] = useState("Spanish"); 
   const router = useRouter();
 
   const handleLanguageSelect = (language) => {
     // Here you can implement logic to set the selected language
+    setLanguage(language);
+    localStorage.setItem("selectedLanguage", language);
     console.log(`Selected language: ${language}`);
 
     // Example: navigate to another page based on selected language

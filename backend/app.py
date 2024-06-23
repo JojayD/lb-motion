@@ -21,13 +21,14 @@ nlp = spacy.load("en_core_web_sm")
 @app.route('/receive_text', methods=['POST'])
 def give_score():
     print("Entered give_score")
-
     if not request.json or 'messages' not in request.json:
         return jsonify({"error": "No messages provided"}), 400
   
     messages = request.json.get('messages', [])
-    
+    language = request.json.get('language')
+    print("Here is the language:",language)
     print(f'These are the messages', messages)
+    
     try:
         for message in messages:
             if message['role'] == 'user':  # Only process user messages
@@ -43,10 +44,11 @@ def give_score():
                     messages=[
                         {"role": "system",
                          "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences. It also explains the corrections in the user's preferred language to enhance understanding."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explain the necessary changes in Spanish."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explain the necessary changes in {language}."},
                     ]
                 )
-                feedback = completion.choices[0].message
+                feedback =completion.choices[0].message.content
+
                 print(f"Feedback: {feedback}")
 
         return jsonify({"status": "success", "message": "Messages processed", "feedback": feedback}), 200

@@ -1,35 +1,45 @@
 "use client";
 import { useVoice, VoiceReadyState } from "@humeai/voice-react";
 import axios from "axios";
-
-const sendMessagesToBackend = (messages) => {
-	console.log("Sending messages to backend:", messages);
-	axios
-		.post("http://127.0.0.1:5000/receive_text", {
-			messages: messages
-				.filter((_, index) => index !== 0 && index !== 1)
-				.map((msg) => ({
-					role: msg.message.role,
-					content: msg.message.content,
-				})),
-			// "messages": messages,
-		})
-		.then((response) => {
-			console.log("Messages sent successfully:", response.data);
-		})
-		.catch((error) => {
-			console.error("Error sending messages:", error);
-		});
-};
+import { useState } from "react";
 
 export default function Controls({ messages, onStop }) {
 	const { connect, disconnect, readyState } = useVoice();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const sendMessagesToBackend = async (messages) => {
+			setIsProcessing(false);
+
+			console.log("Sending messages to backend:", messages);
+			try {
+				const selectedLanguage =
+					localStorage.getItem("selectedLanguage"); // Fallback if localStorage is not available or selectedLanguage is not set
+				const filteredMessages = messages
+					.filter((_, index) => index !== 0 && index !== 1)
+					.map(({ message: { role, content } }) => ({ role, content }));
+
+				const response = await axios.post("http://127.0.0.1:5000/receive_text", {
+					messages: filteredMessages,
+					language: selectedLanguage,
+				});
+
+				console.log(response);
+			} catch (error) {
+				console.error("An error occurred:", error);
+			}
+		};
+
 
 	const handleStopConversation = () => {
+     if (isProcessing) return;
+     setIsProcessing(true);
+
 		sendMessagesToBackend(messages);
+    // console.log(localStorage.getItem("selectedLanguage"))
 		console.log("Stopping conversation. Sending messages:", messages);
+    localStorage.removeItem("selectedLanguage");
 		disconnect();
-		onStop();
+		// onStop();
 	};
 
 	if (readyState === VoiceReadyState.OPEN) {
