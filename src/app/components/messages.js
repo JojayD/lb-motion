@@ -27,7 +27,7 @@ const Messages = ({ messageConversation, setMessageConversation }) => {
 					<p className='text-center text-gray-500'>
 						No messages yet.
 						<br />
-						Select 'Start Session' to chat.
+						Select Start Session to chat.
 					</p>
 				)}
 				{messages.map((msg, index) => {

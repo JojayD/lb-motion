@@ -104,7 +104,7 @@ function SignInPage() {
             Sign in with Google
           </button>
           <p className="mt-4 text-gray-600">
-            Don't have an account?{" "}
+            Do not have an account?{" "}
             <span
               className="text-teal-600 cursor-pointer"
               onClick={handleSignUpNow}
