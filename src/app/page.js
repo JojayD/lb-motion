@@ -31,7 +31,7 @@ function SignInPage() {
       setTimeout(() => {
         setShowPopup(false);
         router.push("/language");
-      }, 2000); // Redirect after 2 seconds
+      }, 500); // Redirect after 2 seconds
     } catch (error) {
       console.error("Error signing in:", error);
       setPopupMessage("Username or password wrong");
@@ -51,7 +51,7 @@ function SignInPage() {
       setTimeout(() => {
         setShowPopup(false);
         router.push("/language");
-      }, 2000); // Redirect after 2 seconds
+      }, 500); // Redirect after 2 seconds
     } catch (error) {
       console.error("Error signing in with Google:", error);
       setPopupMessage("Failed to sign in with Google");

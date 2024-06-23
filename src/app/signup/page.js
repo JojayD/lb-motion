@@ -28,7 +28,7 @@ function SignUpPage() {
       setTimeout(() => {
         setShowPopup(false);
         router.push("/language");
-      }, 2000); // Redirect after 2 seconds
+      }, 500); // Redirect after 2 seconds
     } catch (error) {
       console.error("Error signing up:", error);
       if (error.code === 'auth/email-already-in-use') {
