@@ -27,7 +27,7 @@ const Messages = ({ messageConversation, setMessageConversation}) => {
 								className={`mb-2 flex ${isUser ? "justify-end" : "justify-start"} mx-2`}
 							>
 								<div
-									className={`max-w-lg w-full md:w-2/3 lg:w-1/2 p-4 rounded-lg ${
+									className={`max-w-lg w-full md:w-2/3 lg:w-1/2 p-4 rounded-lg shadow-2xl ${
 										isUser ? "bg-green-500 text-white" : "bg-blue-500 text-white"
 									}`}
 								>

@@ -37,7 +37,11 @@ export default function Controls({ messages, onStop }) {
 			<div className='fixed bottom-4 right-4'>
 				<button
 					onClick={handleStopConversation}
-					className='px-4 py-2 bg-red-500 text-white rounded'
+					className='cursor-pointer transition-all 
+bg-gray-700 text-white px-6 py-2 rounded-lg
+border-red-400
+border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-red-300 shadow-red-300 active:shadow-none'
 				>
 					End Session
 				</button>
@@ -60,7 +64,11 @@ export default function Controls({ messages, onStop }) {
 							/* handle error */
 						});
 				}}
-				className='px-4 py-2 bg-blue-500 text-white rounded'
+				className='cursor-pointer transition-all 
+bg-gray-700 text-white px-6 py-2 rounded-lg
+border-green-400
+border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
+active:border-b-[2px] active:brightness-90 active:translate-y-[2px] hover:shadow-xl hover:shadow-green-300 shadow-green-300 active:shadow-none'
 			>
 				Start Session
 			</button>

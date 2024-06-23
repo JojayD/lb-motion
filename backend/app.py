@@ -30,23 +30,24 @@ def give_score():
     print(f'These are the messages', messages)
     try:
         for message in messages:
-            doc = nlp(message['content'])
-            inputs = tokenizer(str(doc), return_tensors="pt")
-            outputs = model(**inputs, labels=inputs["input_ids"])
-            log_likelihood = outputs.loss.item()
-            print(f"Message from {message['role']}: {message['content']}")
-            print("Log likelihood: ", log_likelihood)
+            if message['role'] == 'user':  # Only process user messages
+                doc = nlp(message['content'])
+                inputs = tokenizer(str(doc), return_tensors="pt")
+                outputs = model(**inputs, labels=inputs["input_ids"])
+                log_likelihood = outputs.loss.item()
+                print(f"Message from {message['role']}: {message['content']}")
+                print("Log likelihood: ", log_likelihood)
 
-            completion = client.chat.completions.create(
-                model="gpt-4o",  # Make sure to use the correct model identifier
-                messages=[
-                    {"role": "system",
-                     "content": "You are a tutor for English that gives back feedback in Japanese. The format should be corrections first in the native language, then the correct way to say it in English."},
-                    {"role": "user", "content": f"Please help me improve this sentence: {message['content']}"},
-                ]
-            )
-            feedback = completion.choices[0].message
-            print(f"Feedback: {feedback}")
+                completion = client.chat.completions.create(
+                    model="gpt-4o",  # Make sure to use the correct model identifier
+                    messages=[
+                        {"role": "system",
+                         "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences. It also explains the corrections in the user's preferred language to enhance understanding."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explain the necessary changes in Spanish."},
+                    ]
+                )
+                feedback = completion.choices[0].message
+                print(f"Feedback: {feedback}")
 
         return jsonify({"status": "success", "message": "Messages processed"}), 200
     except Exception as e:
