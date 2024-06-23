@@ -560,7 +560,7 @@ function LanguageSelection() {
     const generateFlag = () => {
       const size = Math.random() * 50 + 30;
       const newFlag = {
-        id: Date.now(),
+        id: Math.random().toString(36).substr(2, 9),
         url: `https://hatscripts.github.io/circle-flags/flags/${flagUrls[Math.floor(Math.random() * flagUrls.length)]}`,
         size: size,
         top: Math.random() * 100 + "vh",
