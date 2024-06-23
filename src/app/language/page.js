@@ -606,9 +606,9 @@ function LanguageSelection() {
             />
             <div className="max-h-64 overflow-y-auto">
               <ul>
-                {filteredLanguages.map((lang) => (
+                {filteredLanguages.map((lang, index) => (
                   <li
-                    key={lang}
+                    key={index}
                     className="cursor-pointer px-4 py-2 hover:bg-gray-100 text-black transform transition duration-300 ease-in-out hover:scale-105"
                     onClick={() => handleLanguageSelect(lang)}
                   >
