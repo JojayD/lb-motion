@@ -7,7 +7,7 @@ import Feedback from "./Feedback";
 export default function ClientComponent({ accessToken }) {
 	const [messageConversation, setMessageConversation] = useState([]);
 	const [completedFeedback, setCompletedFeedback] = useState(false);
-	const [feedback, setFeedback] = useState("");
+	const [feedback, setFeedback] = useState([]);
 	// This function might be triggered by a button or at the end of a conversation
 	const handleStopConversation = async () => {
 		// Simulate fetching feedback from a backend or generating it

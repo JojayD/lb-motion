@@ -28,16 +28,16 @@ def give_score():
     language = request.json.get('language')
     print("Here is the language:",language)
     print(f'These are the messages', messages)
-    # list_of_messages = []
+    list_of_messages = []
     try:
         for message in messages:
             if message['role'] == 'user':  # Only process user messages
                 doc = nlp(message['content'])
-                inputs = tokenizer(str(doc), return_tensors="pt")
-                outputs = model(**inputs, labels=inputs["input_ids"])
-                log_likelihood = outputs.loss.item()
+                # inputs = tokenizer(str(doc), return_tensors="pt")
+                # outputs = model(**inputs, labels=inputs["input_ids"])
+                # log_likelihood = outputs.loss.item()
                 # print(f"Message from {message['role']}: {message['content']}")
-                print("Log likelihood: ", log_likelihood)
+                # print("Log likelihood: ", log_likelihood)
 
                 completion = client.chat.completions.create(
                     model="gpt-4o",  # Make sure to use the correct model identifier
@@ -48,10 +48,10 @@ def give_score():
                     ]
                 )
                 feedback =completion.choices[0].message.content
-                # list_of_messages.append({"feedback":feedback,  "log_likelihood": log_likelihood})
+                list_of_messages.append({"feedback":feedback})
                 print(f"Feedback: {feedback}")
 
-        return jsonify({"status": "success", "message": "Messages processed", "feedback": feedback}), 200
+        return jsonify({"status": "success", "message": "Messages processed", "feedback": list_of_messages}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
