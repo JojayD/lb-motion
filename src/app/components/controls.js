@@ -1,44 +1,55 @@
 "use client";
 import { useVoice, VoiceReadyState } from "@humeai/voice-react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Controls({ messages, onStop }) {
+export default function Controls({
+	messages,
+	onStop,
+	setFeedback,
+	feedback,
+	setCompletedFeedback,
+}) {
 	const { connect, disconnect, readyState } = useVoice();
 	const [isProcessing, setIsProcessing] = useState(false);
-	
+	useEffect(() => {
+		console.log("Feedback updated:", feedback);
+	}, [feedback]);
 
-  const sendMessagesToBackend = async (messages) => {
-			setIsProcessing(false);
+const sendMessagesToBackend = async (messages) => {
+	setIsProcessing(false);
 
-			console.log("Sending messages to backend:", messages);
-			try {
-				const selectedLanguage =
-					localStorage.getItem("selectedLanguage"); // Fallback if localStorage is not available or selectedLanguage is not set
-				const filteredMessages = messages
-					.filter((_, index) => index !== 0 && index !== 1)
-					.map(({ message: { role, content } }) => ({ role, content }));
+	console.log("Sending messages to backend:", messages);
+	try {
+		const selectedLanguage =
+			localStorage.getItem("selectedLanguage") || "defaultLanguage"; // Providing a fallback directly here
+		const filteredMessages = messages
+			.filter((_, index) => index !== 0 && index !== 1)
+			.map(({ message }) => ({
+				role: message?.role || "assistant", 
+				content: message?.content,
+			}));
 
-				const response = await axios.post("http://127.0.0.1:5000/receive_text", {
-					messages: filteredMessages,
-					language: selectedLanguage,
-				});
+		const response = await axios.post("http://127.0.0.1:5000/receive_text", {
+			messages: filteredMessages,
+			language: selectedLanguage,
+		});
 
-				console.log(response);
-			} catch (error) {
-				console.error("An error occurred:", error);
-			}
-		};
-
+		setFeedback(response.data.feedback);
+	} catch (error) {
+		console.error("An error occurred:", error);
+	}
+};
 
 	const handleStopConversation = () => {
-     if (isProcessing) return;
-     setIsProcessing(true);
+		if (isProcessing) return;
+		setIsProcessing(true);
 
 		sendMessagesToBackend(messages);
-    console.log(localStorage.getItem("selectedLanguage"))
+		console.log(localStorage.getItem("selectedLanguage"));
 		console.log("Stopping conversation. Sending messages:", messages);
-    localStorage.removeItem("selectedLanguage");
+		localStorage.removeItem("selectedLanguage");
+    setCompletedFeedback(true);
 		disconnect();
 		// onStop();
 	};

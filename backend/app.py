@@ -28,7 +28,7 @@ def give_score():
     language = request.json.get('language')
     print("Here is the language:",language)
     print(f'These are the messages', messages)
-    
+    # list_of_messages = []
     try:
         for message in messages:
             if message['role'] == 'user':  # Only process user messages
@@ -36,7 +36,7 @@ def give_score():
                 inputs = tokenizer(str(doc), return_tensors="pt")
                 outputs = model(**inputs, labels=inputs["input_ids"])
                 log_likelihood = outputs.loss.item()
-                print(f"Message from {message['role']}: {message['content']}")
+                # print(f"Message from {message['role']}: {message['content']}")
                 print("Log likelihood: ", log_likelihood)
 
                 completion = client.chat.completions.create(
@@ -48,7 +48,7 @@ def give_score():
                     ]
                 )
                 feedback =completion.choices[0].message.content
-
+                # list_of_messages.append({"feedback":feedback,  "log_likelihood": log_likelihood})
                 print(f"Feedback: {feedback}")
 
         return jsonify({"status": "success", "message": "Messages processed", "feedback": feedback}), 200

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useVoice } from "@humeai/voice-react";
-
+import Feedback from "./Feedback";
 const Messages = ({ messageConversation, setMessageConversation}) => {
 	const { messages } = useVoice();
 	useEffect(() => {
