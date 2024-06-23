@@ -68,8 +68,8 @@ function SignInPage() {
     <div className="flex flex-col md:flex-row h-screen items-center justify-center p-4 bg-green-200">
       {/* Login Form */}
       <div className="mx-8">
-      <h1 className="text-5xl font-bold text-black text-center">Lingo AI</h1>
-      <img className="h-64" src="globe.png"/>
+      <h1 className="text-5xl font-bold text-black text-center opacity-0 animate-slideInLeft">Lingo AI</h1>
+      <img className="h-64 animate-dropInBounce" src="globe.png"/>
       </div>
       <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
         <h2 className="text-2xl font-bold text-black">Welcome back</h2>

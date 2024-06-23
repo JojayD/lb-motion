@@ -12,7 +12,7 @@ const Messages = ({ messageConversation, setMessageConversation}) => {
 
 	return (
 		<div className='mt-8 mx-8'>
-			<h3 className='text-2xl font-semibold mb-4 text-black text-center'>
+			<h3 className='text-3xl font-semibold mb-4 text-black text-center'>
 				Conversation:
 			</h3>
 			<div className='space-y-4'>

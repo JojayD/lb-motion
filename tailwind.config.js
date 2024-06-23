@@ -22,6 +22,34 @@ module.exports = {
 					to: { opacity: 1 },
 				},
 			},
+
+      keyframes: {
+        dropInBounce: {
+          '0%': { transform: 'translateY(-100vh)' },
+          '80%': { transform: 'translateY(0)' },
+          '90%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        slideInLeft: {
+          '0%': { transform: 'translateX(-100%)', opacity: 0 },
+          '100%': { transform: 'translateX(0)', opacity: 1 },
+        },
+      },
+
+      animation: {
+        dropInBounce: 'dropInBounce 2s ease-out',
+        slideInLeft: 'slideInLeft 1s ease-out forwards 1.5s',
+      },
+
+      keyframes: {
+        float: {
+          '0%': { transform: 'translateX(-60vw)' },
+          '100%': { transform: 'translateX(100vw)' },
+        },
+      },
+      animation: {
+        float: 'float 15s linear infinite',
+      },
     },
   },
   plugins: [],
