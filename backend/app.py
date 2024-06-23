@@ -49,7 +49,7 @@ def give_score():
                 feedback = completion.choices[0].message
                 print(f"Feedback: {feedback}")
 
-        return jsonify({"status": "success", "message": "Messages processed"}), 200
+        return jsonify({"status": "success", "message": "Messages processed", "feedback": feedback}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
