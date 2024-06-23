@@ -1,11 +1,10 @@
 
 /// this is sign in 
 
-
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../backend/firebase/firebaseConfig";
 import Popup from "@/app/pops/popupmesg"; 
 
@@ -36,6 +35,26 @@ function SignInPage() {
     } catch (error) {
       console.error("Error signing in:", error);
       setPopupMessage("Username or password wrong");
+      setPopupColor("red");
+      setShowPopup(true);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const userCredential = await signInWithPopup(auth, provider);
+      console.log("Signed in with Google successfully:", userCredential.user.uid);
+      setPopupMessage("Signed in with Google successfully");
+      setPopupColor("green");
+      setShowPopup(true);
+      setTimeout(() => {
+        setShowPopup(false);
+        router.push("/language");
+      }, 2000); // Redirect after 2 seconds
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+      setPopupMessage("Failed to sign in with Google");
       setPopupColor("red");
       setShowPopup(true);
     }
@@ -72,6 +91,13 @@ function SignInPage() {
             className="w-full p-3 bg-teal-600 text-white rounded hover:bg-teal-700"
           >
             Sign in
+          </button>
+          <button
+            type="button"
+            className="w-full p-3 bg-red-600 text-white rounded hover:bg-red-700 mt-4"
+            onClick={handleGoogleSignIn}
+          >
+            Sign in with Google
           </button>
           <p className="mt-4 text-gray-600">
             Don't have an account?{" "}
