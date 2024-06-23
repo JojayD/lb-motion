@@ -68,6 +68,7 @@ function SignInPage() {
     <div className="flex h-screen items-center justify-center p-4 bg-green-200">
       {/* Login Form */}
       
+      <img className="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 mr-8" src="globe.png"/>
       <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
         <h2 className="text-2xl font-bold text-black">Welcome back</h2>
         <form className="flex flex-col items-center gap-4" onSubmit={handleSignIn}>
