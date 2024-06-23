@@ -39,7 +39,7 @@ def give_score():
                     messages=[
                         {"role": "system",
                          "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences using the client's preferred language. It only explains the corrections in the user's preferred language to enhance understanding."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explain the necessary changes in {language}. At the end of your feedback sentence, provide a rating for the grammatical correctness of the user's sentence on a scale of 1 to 5, where 1 is poor and 5 is excellent. Only provide the number at the end of your feedback sentence, without any additional text or labels."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections in {language} and explain the necessary changes in {language}. At the end of your feedback sentence, provide a rating for the grammatical correctness of the user's sentence on a scale of 1 to 5, where 1 is poor and 5 is excellent. Ensure the rating is provided as an integer and that there is no period at the end."},
                     ]
                 )
                 feedback = completion.choices[0].message.content
