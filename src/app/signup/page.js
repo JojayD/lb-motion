@@ -1,44 +1,49 @@
 
-/// this is sign in 
-
-
+///// this is sign up page
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../backend/firebase/firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../../backend/firebase/firebaseConfig";
 import Popup from "@/app/pops/popupmesg"; 
 
-function SignInPage() {
+function SignUpPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [error, setError] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
   const [popupColor, setPopupColor] = useState("");
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleSignUpNow = () => {
-    router.push("/signup"); 
-  };
-
-  const handleSignIn = async (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Signed in successfully:", userCredential.user.uid);
-      setPopupMessage("Signed in successfully");
-      setPopupColor("green");
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      console.log("Signed up successfully:", userCredential.user.uid);
+      setPopupMessage("Signed up successfully");
+      setPopupColor("green"); // Set the color for success message
       setShowPopup(true);
       setTimeout(() => {
         setShowPopup(false);
-        router.push("/language");
+        router.push("/dashboard");
       }, 2000); // Redirect after 2 seconds
     } catch (error) {
-      console.error("Error signing in:", error);
-      setPopupMessage("Username or password wrong");
-      setPopupColor("red");
+      console.error("Error signing up:", error);
+      if (error.code === 'auth/email-already-in-use') {
+        setPopupMessage("User already exists");
+        setPopupColor("red"); // Set the color for error message
+      } else {
+        setPopupMessage("Error signing up");
+        setPopupColor("red"); // Set the color for generic error message
+      }
       setShowPopup(true);
     }
+  };
+
+  const handleSignInNow = () => {
+    router.push("/"); 
   };
 
   const closePopup = () => {
@@ -47,10 +52,19 @@ function SignInPage() {
 
   return (
     <div className="flex h-screen items-center justify-center p-4 bg-green-200">
-      {/* Login Form */}
+      {/* Registration Form */}
       <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
-        <h2 className="text-2xl font-bold text-black">Welcome back</h2>
-        <form className="flex flex-col items-center gap-4" onSubmit={handleSignIn}>
+        <h2 className="text-2xl font-bold text-black">Create a New Account</h2>
+        <form className="flex flex-col items-center gap-4" onSubmit={handleSignUp}>
+          {error && <p className="text-red-500">{error}</p>}
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
           <input
             type="email"
             placeholder="Email"
@@ -71,15 +85,15 @@ function SignInPage() {
             type="submit"
             className="w-full p-3 bg-teal-600 text-white rounded hover:bg-teal-700"
           >
-            Sign in
+            Sign Up
           </button>
           <p className="mt-4 text-gray-600">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <span
               className="text-teal-600 cursor-pointer"
-              onClick={handleSignUpNow}
+              onClick={handleSignInNow}
             >
-              Sign up now
+              Sign in now
             </span>
           </p>
         </form>
@@ -89,4 +103,4 @@ function SignInPage() {
   );
 }
 
-export default SignInPage;
+export default SignUpPage;
