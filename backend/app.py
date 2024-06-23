@@ -33,23 +33,28 @@ def give_score():
         for message in messages:
             if message['role'] == 'user':  # Only process user messages
                 doc = nlp(message['content'])
-                # inputs = tokenizer(str(doc), return_tensors="pt")
-                # outputs = model(**inputs, labels=inputs["input_ids"])
-                # log_likelihood = outputs.loss.item()
-                # print(f"Message from {message['role']}: {message['content']}")
-                # print("Log likelihood: ", log_likelihood)
 
                 completion = client.chat.completions.create(
                     model="gpt-4o",  # Make sure to use the correct model identifier
                     messages=[
                         {"role": "system",
-                         "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences. It also explains the corrections in the user's preferred language to enhance understanding."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explain the necessary changes in {language}."},
+                         "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences using the client's preferred language. It only explains the corrections in the user's preferred language to enhance understanding."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explain the necessary changes in {language}. After providing the feedback, at the end of your feedback sentence, please provide a rating for the grammatical correctness of the user's sentence on a scale of 1 to 5, where 1 is poor and 5 is excellent. Just provide the number, do not say Rating: (number) or anything additional. Just provide the number only at the end of your feedback sentence."},
                     ]
                 )
-                feedback =completion.choices[0].message.content
-                list_of_messages.append({"feedback":feedback})
-                print(f"Feedback: {feedback}")
+                feedback = completion.choices[0].message.content
+                print(f"initial feedback {feedback}")
+                
+                # Extract the rating from the feedback
+                if feedback and feedback[-1].isdigit():
+                    rating = feedback[-1]
+                    feedback_without_rating = feedback[:-1].strip()
+                else:
+                    rating = "N/A"
+                    feedback_without_rating = feedback
+
+                list_of_messages.append({"feedback": feedback_without_rating, "rating": rating})
+                print(f"Feedback: {feedback_without_rating}, Rating: {rating}")
 
         return jsonify({"status": "success", "message": "Messages processed", "feedback": list_of_messages}), 200
     except Exception as e:

@@ -31,13 +31,13 @@ export default function ClientComponent({ accessToken }) {
             feedback={feedback}
 						messages={messageConversation}
             setFeedback={setFeedback}
-            setCompletedFeedback={setCompletedFeedback}
+            	setCompletedFeedback={setCompletedFeedback}
 						onStop={handleStopConversation}
 					/>
 				</div>
 			) : (
 				// Show feedback if feedback is completed
-				<Feedback feedback={feedback} />
+				<Feedback setCompletedFeedback={setCompletedFeedback}completedFeedback={completedFeedback} feedback={feedback} />
 			)}
 		</VoiceProvider>
 	);
