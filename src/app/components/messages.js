@@ -1,24 +1,36 @@
-// ./components/Messages.js
 "use client";
+import React, { useEffect } from "react";
 import { useVoice } from "@humeai/voice-react";
-
-export default function Messages() {
-  const { messages } = useVoice();
+const Messages = ({ conversationMessages }) => {
+    const { messages } = useVoice();
+  useEffect(() => {
+    console.log("Messages component updated. Messages:", messages);
+  }, [messages]);
 
   return (
-    <div className="mt-8">
-      <h3 className="text-2xl font-semibold mb-4">Conversation:</h3>
-      {messages.map((msg, index) => {
-        if (msg.type === "user_message" || msg.type === "assistant_message") {
-          return (
-            <div key={msg.type + index} className="mb-2">
-              <strong>{msg.message.role === "user" ? "You:" : "AI:"}</strong>
-              <div>{msg.message.content}</div>
-            </div>
-          );
-        }
-        return null;
-      })}
+    <div className="mt-8 mx-8">
+      <h3 className="text-2xl font-semibold mb-4 text-black text-center">Conversation:</h3>
+      <div className="space-y-4">
+        {messages.length === 0 && (
+          <p className="text-center text-gray-500">No messages yet.</p>
+        )}
+        {messages.map((msg, index) => {
+          if (msg.type === "user_message" || msg.type === "assistant_message") {
+            const isUser = msg.message && msg.message.role === "user";
+            return (
+              <div key={index} className={`mb-2 flex ${isUser ? 'justify-end' : 'justify-start'} mx-2`}>
+                <div className={`max-w-lg w-full md:w-2/3 lg:w-1/2 p-4 rounded-lg ${isUser ? 'bg-green-500 text-white' : 'bg-blue-500 text-white'}`}>
+                  <strong>{isUser ? 'You:' : 'AI:'}</strong>
+                  <div className="ml-2">{msg.message ? msg.message.content : "No content"}</div>
+                </div>
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
     </div>
   );
-}
+};
+
+export default Messages;

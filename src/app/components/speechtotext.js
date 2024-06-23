@@ -62,7 +62,7 @@ const SpeechToText = () => {
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center p-4">
       <button onClick={handleStartListening} disabled={listening} className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50">
         Start Listening
       </button>
