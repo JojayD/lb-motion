@@ -1,4 +1,5 @@
-// /pages/language/choose.js
+
+///// Language page
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,17 +10,21 @@ function LanguageSelection() {
   const router = useRouter();
 
   const handleLanguageSelect = (language) => {
-    // Here you can implement logic to set the selected language
     setLanguage(language);
     localStorage.setItem("selectedLanguage", language);
     console.log(`Selected language: ${language}`);
-
-    // Example: navigate to another page based on selected language
     router.push("/dashboard");
   };
 
   return (
-    <div className="flex h-screen items-center justify-center p-4 bg-green-500">
+    <div
+      className="flex h-screen items-center justify-center p-4"
+      style={{
+        backgroundImage: `url('/hack.jpeg')`, // Replace path for pic
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className="relative">
         {/* Language Selector Button */}
         <button

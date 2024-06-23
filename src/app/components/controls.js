@@ -5,7 +5,8 @@ import { useState } from "react";
 
 export default function Controls({ messages, onStop }) {
 	const { connect, disconnect, readyState } = useVoice();
-  const [isProcessing, setIsProcessing] = useState(false);
+	const [isProcessing, setIsProcessing] = useState(false);
+	
 
   const sendMessagesToBackend = async (messages) => {
 			setIsProcessing(false);

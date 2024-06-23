@@ -24,7 +24,7 @@ function SignInPage() {
     e.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Signed in successfully:", userCredential.user.uid);
+      console.log("Signed in successfully",);
       setPopupMessage("Signed in successfully");
       setPopupColor("green");
       setShowPopup(true);
@@ -44,7 +44,7 @@ function SignInPage() {
     const provider = new GoogleAuthProvider();
     try {
       const userCredential = await signInWithPopup(auth, provider);
-      console.log("Signed in with Google successfully:", userCredential.user.uid);
+      console.log("Signed in with Google successfully",);
       setPopupMessage("Signed in with Google successfully");
       setPopupColor("green");
       setShowPopup(true);
