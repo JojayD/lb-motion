@@ -8,6 +8,7 @@ export default function ClientComponent({ accessToken }) {
 	const [messageConversation, setMessageConversation] = useState([]);
 	const [completedFeedback, setCompletedFeedback] = useState(false);
 	const [feedback, setFeedback] = useState([]);
+
 	// This function might be triggered by a button or at the end of a conversation
 	const handleStopConversation = async () => {
 		// Simulate fetching feedback from a backend or generating it
@@ -24,20 +25,24 @@ export default function ClientComponent({ accessToken }) {
 					<Messages
 						messages={messageConversation}
 						setMessageConversation={setMessageConversation}
-            feedback={feedback}
-            setFeedback={setFeedback}
+						feedback={feedback}
+						setFeedback={setFeedback}
 					/>
 					<Controls
-            feedback={feedback}
+						feedback={feedback}
 						messages={messageConversation}
-            setFeedback={setFeedback}
-            	setCompletedFeedback={setCompletedFeedback}
+						setFeedback={setFeedback}
+						setCompletedFeedback={setCompletedFeedback}
 						onStop={handleStopConversation}
 					/>
 				</div>
 			) : (
 				// Show feedback if feedback is completed
-				<Feedback setCompletedFeedback={setCompletedFeedback}completedFeedback={completedFeedback} feedback={feedback} />
+				<Feedback
+					setCompletedFeedback={setCompletedFeedback}
+					completedFeedback={completedFeedback}
+					feedback={feedback}
+				/>
 			)}
 		</VoiceProvider>
 	);

@@ -2,11 +2,13 @@
 import React, { useEffect } from "react";
 import { useVoice } from "@humeai/voice-react";
 import Feedback from "./Feedback";
-const Messages = ({ messageConversation, setMessageConversation}) => {
+const Messages = ({
+	messageConversation,
+	setMessageConversation,
+}) => {
 	const { messages } = useVoice();
 	useEffect(() => {
-    setMessageConversation(messages);
-
+		setMessageConversation(messages);
 		console.log("Messages component updated. Messages:", messages);
 	}, [messages]);
 
@@ -18,9 +20,10 @@ const Messages = ({ messageConversation, setMessageConversation}) => {
 			<div className='space-y-4'>
 				{messages.length === 0 && (
 					<p className='text-center text-gray-500'>
-                    No messages yet.<br />
-                    Select 'Start Session' to chat.
-                  </p>
+						No messages yet.
+						<br />
+						Select 'Start Session' to chat.
+					</p>
 				)}
 				{messages.map((msg, index) => {
 					if (msg.type === "user_message" || msg.type === "assistant_message") {
@@ -39,6 +42,20 @@ const Messages = ({ messageConversation, setMessageConversation}) => {
 									<div className='ml-2'>
 										{msg.message ? msg.message.content : "No content"}
 									</div>
+									{isUser &&
+										msg.models &&
+										msg.models.prosody &&
+										msg.models.prosody.scores &&
+										msg.models.prosody.scores.Awkwardness && (
+											<>
+												<div className='mt-2'>
+													Awkwardness: {msg.models.prosody.scores.Awkwardness.toFixed(2)}
+												</div>
+												<div>
+													Contentment: {msg.models.prosody.scores.Contentment.toFixed(2)}
+												</div>
+											</>
+										)}
 								</div>
 							</div>
 						);
