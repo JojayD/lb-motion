@@ -1,4 +1,3 @@
-# Use Miniconda base image
 FROM continuumio/miniconda3 as base
 
 # Prevents Python from writing pyc files to disc
