@@ -60,3 +60,14 @@ body {
   color: #006400;
   text-transform: uppercase;
 }
+
+.float-image-left {
+  shape-outside: circle(50%);
+  margin-right: 20px
+}
+
+.float-image-right {
+  shape-outside: circle(50%);
+  margin-left: 20px
+}
+
