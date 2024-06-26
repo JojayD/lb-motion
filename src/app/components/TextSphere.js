@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from "react";
 // Importing TagCloud package
 import TagCloud from "TagCloud";
 
-const TextShpere = () => {
+const TextSphere = () => {
   // Animation settings for Text Cloud
   const containerRef = useRef(null);
   useEffect(() => {
@@ -79,7 +79,7 @@ const TextShpere = () => {
 
   return (
     <>
-      <div className="text-shpere">
+      <div className="text-sphere">
         {/* span tag className must be "tagcloud"  */}
         <span className="tagcloud" ref={containerRef}></span>
       </div>
@@ -87,4 +87,4 @@ const TextShpere = () => {
   );
 };
 
-export default TextShpere;
+export default TextSphere;
