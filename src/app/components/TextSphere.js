@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 //import "../styles/TextShpere.css";
 
@@ -7,9 +7,11 @@ import TagCloud from "TagCloud";
 
 const TextShpere = () => {
   // Animation settings for Text Cloud
+  const containerRef = useRef(null);
   useEffect(() => {
     return () => {
-      const container = ".tagcloud";
+      const container = containerRef.current;
+      
       const texts = [
         "Hello",       // English
         "Hola",        // Spanish
@@ -66,6 +68,9 @@ const TextShpere = () => {
         maxSpeed: "normal",
         initSpeed: "normal",
         keep: true,
+        loop: true,
+        lockX: true,
+        lockY: true,
       };
 
       TagCloud(container, texts, options);
@@ -76,7 +81,7 @@ const TextShpere = () => {
     <>
       <div className="text-shpere">
         {/* span tag className must be "tagcloud"  */}
-        <span className="tagcloud"></span>
+        <span className="tagcloud" ref={containerRef}></span>
       </div>
     </>
   );
