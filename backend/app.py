@@ -6,6 +6,8 @@ from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import spacy
+import re
+
 
 # Load environment variables and initialize services
 load_dotenv(find_dotenv())
@@ -38,23 +40,40 @@ def give_score():
                     model="gpt-4o",  # Make sure to use the correct model identifier
                     messages=[
                         {"role": "system",
-                         "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences using the client's preferred language. It only explains the corrections in the user's preferred language to enhance understanding."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections in {language} and explain the necessary changes in {language}. At the end of your feedback sentence, provide a rating for the grammatical correctness of the user's sentence on a scale of 1 to 5, where 1 is poor and 5 is excellent. Ensure the rating is provided as an integer and that there is no period at the end."},
+                         "content": "This assistant provides grammatical feedback and corrections for English sentences. It explains the necessary corrections and changes in the user's preferred language to enhance understanding and clarity."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explanations for the necessary changes in {language}."},
                     ]
                 )
+
+                completion_2 = client.chat.completions.create(
+                    model="gpt-4o",  # Make sure to use the correct model identifier
+                    messages=[
+                        {"role": "system",
+                         "content": "This assistant is designed to provide grammatical feedback and corrections for English sentences, rating them from 1 to 5 based on grammar, naturalness, and fluency. It explains the corrections in the user's preferred language to enhance understanding and learning."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide a single digit rating from 1 to 5, evaluating how grammatical, natural, and fluent the sentence is. Use the following scale: 1 = Very poor, 2 = Poor, 3 = Fair, 4 = Good, 5 = Excellent. Reply with only the number."},
+                    ]
+                )
+
                 feedback = completion.choices[0].message.content
                 print(f"initial feedback {feedback}")
-                
-                # Extract the rating from the feedback
-                if feedback and feedback[-1].isdigit():
-                    rating = feedback[-1]
-                    feedback_without_rating = feedback[:-1].strip()
-                else:
-                    rating = "N/A"
-                    feedback_without_rating = feedback
 
-                list_of_messages.append({"feedback": feedback_without_rating, "rating": rating})
-                print(f"Feedback: {feedback_without_rating}, Rating: {rating}")
+                rating = completion_2.choices[0].message.content
+                print(f"Rating: {rating}")
+                
+                # Extract the number from the rating
+                def extract_number_from_string(text):
+                # Search for the first occurrence of a digit in the string
+                    match = re.search(r'\d+', text)
+                    if match:
+                        return match.group()
+                    else:
+                        print("no number found")
+                        return None
+                
+                official_rating = extract_number_from_string(rating)
+
+                list_of_messages.append({"feedback": feedback, "rating": official_rating})
+                print(f"Feedback: {feedback}, Rating: {official_rating}")
 
         return jsonify({"status": "success", "message": "Messages processed", "feedback": list_of_messages}), 200
     except Exception as e:

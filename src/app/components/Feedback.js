@@ -7,8 +7,9 @@ function Feedback({ setCompletedFeedback, feedback }) {
 
   const renderStars = (rating) => {
     const stars = [];
+    const intRating = parseInt(rating, 10); // Ensure the rating is an integer
     for (let i = 0; i < 5; i++) {
-      if (i < rating) {
+      if (i < intRating) {
         stars.push(
           <svg
             key={i}
