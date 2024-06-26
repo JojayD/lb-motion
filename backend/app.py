@@ -42,7 +42,7 @@ def give_score():
                     messages=[
                         {"role": "system",
                          "content": "This assistant provides grammatical feedback and corrections for English sentences. It explains the necessary corrections and changes in the user's preferred language to enhance understanding and clarity."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Please provide grammatical corrections and explanations for the necessary changes in {language}."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. Only provide grammatical corrections and explanations for the necessary changes in the user's language: {language}."},
                     ]
                 )
 

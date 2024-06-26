@@ -66,6 +66,9 @@ const TextShpere = () => {
         maxSpeed: "normal",
         initSpeed: "normal",
         keep: true,
+        loop: true,
+        lockX: true,
+        lockY: true,
       };
 
       TagCloud(container, texts, options);
