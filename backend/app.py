@@ -1,11 +1,9 @@
-import tempfile
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
-import spacy
 import re
 
 
@@ -16,9 +14,12 @@ client = OpenAI(api_key=openai_api_key)
 
 app = Flask(__name__)
 CORS(app)
-tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-model = GPT2LMHeadModel.from_pretrained('gpt2')
-nlp = spacy.load("en_core_web_sm")
+
+
+@app.route('/')
+def hello():
+    return "Hello, World!"
+
 
 @app.route('/receive_text', methods=['POST'])
 def give_score():
@@ -34,7 +35,7 @@ def give_score():
     try:
         for message in messages:
             if message['role'] == 'user':  # Only process user messages
-                doc = nlp(message['content'])
+                
 
                 completion = client.chat.completions.create(
                     model="gpt-4o",  # Make sure to use the correct model identifier

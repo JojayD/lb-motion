@@ -30,10 +30,13 @@ const sendMessagesToBackend = async (messages) => {
 				content: message?.content,
 			}));
 
-		const response = await axios.post("http://127.0.0.1:5000/receive_text", {
-			messages: filteredMessages,
-			language: selectedLanguage,
-		});
+		const response = await axios.post(
+			"https://backend-aged-moon-4194.fly.dev/receive_text",
+			{
+				messages: filteredMessages,
+				language: selectedLanguage,
+			}
+		);
 
 		setFeedback(response.data.feedback);
 	} catch (error) {
