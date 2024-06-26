@@ -1,14 +1,15 @@
-import TagCloud from "TagCloud";
-import { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
-const TextSphere = () => {
+//import "../styles/TextShpere.css";
+
+// Importing TagCloud package
+import TagCloud from "TagCloud";
+
+const TextShpere = () => {
   // Animation settings for Text Cloud
-  const containerRef = useRef(null);
   useEffect(() => {
     return () => {
-      const container = containerRef.current;
-      console.log("Container ref: ", container);
-      
+      const container = ".tagcloud";
       const texts = [
         "Hello",       // English
         "Hola",        // Spanish
@@ -76,12 +77,12 @@ const TextSphere = () => {
 
   return (
     <>
-      <div className="text-sphere">
+      <div className="text-shpere">
         {/* span tag className must be "tagcloud"  */}
-        <span className="tagcloud" ref={containerRef}></span>
+        <span className="tagcloud"></span>
       </div>
     </>
   );
 };
 
-export default TextSphere;
+export default TextShpere;
