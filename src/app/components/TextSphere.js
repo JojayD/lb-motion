@@ -1,9 +1,5 @@
-import React, { useEffect, useRef } from "react";
-
-//import "../styles/TextShpere.css";
-
-// Importing TagCloud package
 import TagCloud from "TagCloud";
+import { useEffect, useRef } from "react";
 
 const TextSphere = () => {
   // Animation settings for Text Cloud
@@ -11,6 +7,7 @@ const TextSphere = () => {
   useEffect(() => {
     return () => {
       const container = containerRef.current;
+      console.log("Container ref: ", container);
       
       const texts = [
         "Hello",       // English
