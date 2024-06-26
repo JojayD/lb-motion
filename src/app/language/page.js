@@ -586,11 +586,11 @@ function LanguageSelection() {
     >
       <h1 className="text-3xl font-bold text-black text-center mb-8 bg-white text-gray-800 px-4 py-2 rounded-lg shadow-md focus:outline-none">Choose your native language!</h1>
       <div className="relative">
-        {/* Language Selector Button */}
+        
         <button
           className="bg-white text-gray-800 px-4 py-2 rounded-lg shadow-md focus:outline-none transform transition duration-300 ease-in-out hover:scale-105"
           onClick={() => setIsOpen(!isOpen)}
-        >
+         >
           Select Language
         </button>
 

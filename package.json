@@ -12,14 +12,15 @@
 		"@humeai/voice": "^0.1.8",
 		"@humeai/voice-react": "^0.1.8",
 		"axios": "^1.7.2",
+		"clsx": "^2.1.1",
 		"firebase": "^10.12.2",
+		"framer-motion": "^11.2.10",
 		"next": "14.2.4",
 		"react": "^18",
 		"react-dom": "^18",
 		"react-toastify": "^10.0.5",
-		"clsx": "^2.1.1",
-		"framer-motion": "^11.2.10",
-		"react-virtualized": "^9.22.5"
+		"react-virtualized": "^9.22.5",
+		"TagCloud": "^2.5.0"
 	},
 	"devDependencies": {
 		"eslint": "^8",

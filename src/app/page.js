@@ -25,27 +25,7 @@ export default function Home() {
           >
             Get Started
           </button>
-<<<<<<< HEAD
-          <button
-            type="button"
-            className="w-full p-3 bg-red-600 text-white rounded hover:bg-red-700 mt-4"
-            onClick={handleGoogleSignIn}
-          >
-            Sign in with Google
-          </button>
-          <p className="mt-4 text-gray-600">
-            Do not have an account?{" "}
-            <span
-              className="text-teal-600 cursor-pointer"
-              onClick={handleSignUpNow}
-            >
-              Sign up now
-            </span>
-          </p>
-        </form>
-=======
         </div>
->>>>>>> test_branch_2
       </div>
     </div>
   );
