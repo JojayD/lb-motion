@@ -13,20 +13,18 @@ const getTopTwoScores = (scores) => {
   return allScores.slice(0, 2);
 };
 
-const Messages = ({ messageConversation, setMessageConversation }) => {
-  const { messages } = useVoice();
+const Messages = ({ messages, setMessageConversation, messageScores, setMessageScores }) => {
+  const { messages: voiceMessages } = useVoice();
   const router = useRouter();
   const messagesEndRef = useRef(null);
 
-  const [messageScores, setMessageScores] = useState({});
-
   useEffect(() => {
-    setMessageConversation(messages);
-    console.log("Messages component updated. Messages:", messages);
+    setMessageConversation(voiceMessages);
+    console.log("Messages component updated. Messages:", voiceMessages);
 
-    if (messages.length > 0) {
-      const latestMessage = messages[messages.length - 1];
-      const messageId = latestMessage.id || `${latestMessage.type}_${messages.length - 1}`;
+    if (voiceMessages.length > 0) {
+      const latestMessage = voiceMessages[voiceMessages.length - 1];
+      const messageId = latestMessage.id || `${latestMessage.type}_${voiceMessages.length - 1}`;
 
       if (latestMessage.message && latestMessage.message.role === "user") {
         const scoresArray = [];
@@ -45,13 +43,14 @@ const Messages = ({ messageConversation, setMessageConversation }) => {
           ...prevScores,
           [messageId]: topScores,
         }));
+        console.log(`Top scores for message ${messageId}:`, topScores); // Added log
       }
     }
 
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, setMessageConversation]);
+  }, [voiceMessages, setMessageConversation, setMessageScores]);
 
   const handleGoBack = () => {
     router.push("/language");
