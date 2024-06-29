@@ -70,7 +70,7 @@ function SignInPage() {
         {/* Login Form */}
         <div className="mx-8">
           <h1 className="text-5xl font-bold text-black text-center opacity-0 animate-slideInLeft">Lingo AI</h1>
-          <img className="h-64 animate-dropInBounce fill-white" src="globe.svg" alt="Globe"/>
+          <img className="h-64 animate-dropInBounce fill-white" src="globe.png" alt="Globe"/>
         </div>
         <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
           <h2 className="text-2xl font-bold text-black">Welcome back</h2>
