@@ -1,3 +1,4 @@
+"use client";
 import { useVoice, VoiceReadyState } from "@humeai/voice-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
