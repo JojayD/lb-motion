@@ -1,24 +1,20 @@
-# fly.toml app configuration file generated for backend-aged-moon-4194 on 2024-06-26T00:56:19-07:00
+# fly.toml app configuration file generated for backend-young-haze-7759 on 2024-06-26T23:42:27-07:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'backend-aged-moon-4194'
+app = 'backend-young-haze-7759'
 primary_region = 'lax'
 
 [build]
 
 [http_service]
-  internal_port = 8080
+  internal_port = 5000
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
-  [http_service.concurrency]
-    type = "requests"
-    soft_limit = 200
-    hard_limit = 250
-
+  processes = ['app']
 
 [[vm]]
   memory = '1gb'
