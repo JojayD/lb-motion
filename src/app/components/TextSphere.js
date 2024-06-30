@@ -8,7 +8,6 @@ import TagCloud from "TagCloud";
 const TextShpere = () => {
   // Animation settings for Text Cloud
   useEffect(() => {
-    return () => {
       const container = ".tagcloud";
       const texts = [
         "Hello",       // English
@@ -72,7 +71,6 @@ const TextShpere = () => {
       };
 
       TagCloud(container, texts, options);
-    };
   }, []);
 
   return (
