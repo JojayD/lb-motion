@@ -6,7 +6,6 @@ import { VoiceProvider, useVoice } from "@humeai/voice-react";
 import Messages from "./messages";
 import Controls from "./controls";
 import Feedback from "./Feedback";
-import { systemPrompt } from "../../config/systemPrompt"; // Import the system prompt
 
 export default function ClientComponent({ accessToken }) {
   const [messageConversation, setMessageConversation] = useState([]);
