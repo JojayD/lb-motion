@@ -1,9 +1,12 @@
+// clientcomponent.js
 "use client";
+
 import { useState } from "react";
-import { VoiceProvider } from "@humeai/voice-react";
+import { VoiceProvider, useVoice } from "@humeai/voice-react";
 import Messages from "./messages";
 import Controls from "./controls";
 import Feedback from "./Feedback";
+import { systemPrompt } from "../../config/systemPrompt"; // Import the system prompt
 
 export default function ClientComponent({ accessToken }) {
   const [messageConversation, setMessageConversation] = useState([]);
@@ -20,7 +23,7 @@ export default function ClientComponent({ accessToken }) {
   };
 
   return (
-    <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>
+    <VoiceProvider auth={{ type: "accessToken", value: accessToken, }} configId={"4095b753-88b5-4529-ad4d-b8be8e54ed0e"}>
       {!completedFeedback ? (
         // Show messages if feedback is not completed
         <div>
