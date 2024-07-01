@@ -18,11 +18,11 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center flex-grow">
         <TextSphere />
         <div className="relative z-10 flex flex-col items-center bg-white px-6 py-3 rounded-md bg-opacity-100 mx-6">
-          <h1 className="text-4xl font-bold mb-6 md:text-3xl sm:text-2xl">Welcome to Lingo AI</h1>
-          <p className="text-xl mb-6 md:text-lg sm:text-base">Improve your fluency today!</p>
+          <h1 className="lg:text-4xl font-bold mb-6 md:text-3xl sm:text-2xl">Welcome to Lingo AI</h1>
+          <p className="lg:text-xl mb-6 md:text-lg sm:text-xs">Improve your fluency today!</p>
           <button
             onClick={handleGetStarted}
-            className="bg-teal-600 text-white px-6 py-3 rounded-md hover:bg-teal-700 transition duration-300 bg-opacity-100"
+            className="bg-teal-600 text-white rounded-md hover:bg-teal-700 transition duration-300 bg-opacity-100 lg:text-lg lg:px-6 lg:py-3 md:text-sm md:px-4 md:py-4 sm:text-xs sm:px-2 sm:py-1"
           >
             Get Started
           </button>
