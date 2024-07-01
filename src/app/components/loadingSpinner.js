@@ -4,7 +4,7 @@ const LoadingSpinner = () => (
   <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-700 bg-opacity-50 z-50">
     <div className="flex flex-col items-center">
       <div className="loader"></div>
-      <div className="mt-4 text-white">Generating feedback...</div>
+      <div className="mt-4 text-white">Loading...</div>
     </div>
     <style jsx>{`
       .loader {
