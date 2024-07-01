@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useVoice } from "@humeai/voice-react";
 import Feedback from "./Feedback";
+import { handleStopConversation } from "./controls";
 
 const getTopTwoScores = (scores) => {
   const allScores = scores.map(({ name, score }) => ({
@@ -13,10 +14,11 @@ const getTopTwoScores = (scores) => {
   return allScores.slice(0, 2);
 };
 
-const Messages = ({ messages, setMessageConversation, messageScores, setMessageScores }) => {
-  const { messages: voiceMessages } = useVoice();
+const Messages = ({ messages, setMessageConversation, messageScores, setMessageScores, setFeedback }) => {
+  const { messages: voiceMessages, disconnect } = useVoice();
   const router = useRouter();
   const messagesEndRef = useRef(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     setMessageConversation(voiceMessages);
@@ -53,7 +55,17 @@ const Messages = ({ messages, setMessageConversation, messageScores, setMessageS
   }, [voiceMessages, setMessageConversation, setMessageScores]);
 
   const handleGoBack = () => {
-    router.push("/language");
+    if (isProcessing) return;
+    setIsProcessing(true);
+    handleStopConversation(
+      messages,
+      messageScores,
+      setFeedback,
+      disconnect
+    ).then(() => {
+      setIsProcessing(false);
+      router.push("/language");
+    });
   };
 
   return (
@@ -110,7 +122,7 @@ const Messages = ({ messages, setMessageConversation, messageScores, setMessageS
           onClick={handleGoBack}
           className="px-4 mb-2 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
-          Change Language
+          Go Back
         </button>
       </div>
     </div>

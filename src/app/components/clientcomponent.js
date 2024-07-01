@@ -1,7 +1,7 @@
 // clientcomponent.js
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { VoiceProvider, useVoice } from "@humeai/voice-react";
 import Messages from "./messages";
 import Controls from "./controls";
@@ -12,19 +12,34 @@ export default function ClientComponent({ accessToken }) {
   const [completedFeedback, setCompletedFeedback] = useState(false);
   const [feedback, setFeedback] = useState([]);
   const [messageScores, setMessageScores] = useState({});
+  const [configId, setConfigId] = useState("db090a99-a760-41ce-a044-974216c42bc8");
 
-  // This function might be triggered by a button or at the end of a conversation
+  useEffect(() => {
+    const selectedDifficulty = localStorage.getItem("selectedDifficulty");
+    switch (selectedDifficulty) {
+      case "easy":
+        setConfigId("db090a99-a760-41ce-a044-974216c42bc8");
+        break;
+      case "medium":
+        setConfigId("cb509718-e9ed-43cb-be32-000ec95d1491");
+        break;
+      case "hard":
+        setConfigId("d3d371bd-6c69-408b-8a6d-1768033e945e");
+        break;
+      default:
+        setConfigId("db090a99-a760-41ce-a044-974216c42bc8");
+    }
+  }, []);
+
   const handleStopConversation = async () => {
-    // Simulate fetching feedback from a backend or generating it
     const newFeedback = "Detailed feedback based on the entire conversation.";
     setFeedback(newFeedback);
-    setCompletedFeedback(true); // Switch view to show feedback
+    setCompletedFeedback(true);
   };
 
   return (
-    <VoiceProvider auth={{ type: "accessToken", value: accessToken, }} configId={"4095b753-88b5-4529-ad4d-b8be8e54ed0e"}>
+    <VoiceProvider auth={{ type: "accessToken", value: accessToken }} configId={configId}>
       {!completedFeedback ? (
-        // Show messages if feedback is not completed
         <div>
           <Messages
             messages={messageConversation}
@@ -44,7 +59,6 @@ export default function ClientComponent({ accessToken }) {
           />
         </div>
       ) : (
-        // Show feedback if feedback is completed
         <Feedback
           setCompletedFeedback={setCompletedFeedback}
           completedFeedback={completedFeedback}
