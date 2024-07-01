@@ -56,10 +56,18 @@ const Messages = ({ messages, setMessageConversation, messageScores, setMessageS
   const handleGoBack = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-    disconnect(); // Disconnect immediately
-    setMessageConversation([]); // Clear message conversation
-    router.push("/language");
-    setIsProcessing(false);
+    handleStopConversation(
+      messages,
+      messageScores,
+      setFeedback,
+      () => {}, // No need to update feedback completion here
+      disconnect,
+      setIsLoading, // Pass setIsLoading
+      setMessageConversation // Pass setMessageConversation
+    ).then(() => {
+      setIsProcessing(false);
+      router.push("/language");
+    });
   };
 
   return (
@@ -67,7 +75,7 @@ const Messages = ({ messages, setMessageConversation, messageScores, setMessageS
       <h3 className="text-3xl font-semibold mb-4 text-black text-center">
         Conversation:
       </h3>
-      <div className="space-y-4 mb-24">
+      <div className="space-y-4 mb-80">
         {messages.length === 0 && (
           <p className="text-center text-gray-500">
             No messages yet.
