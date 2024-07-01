@@ -34,7 +34,7 @@ body {
   }
 }
 
-.text-shpere {
+.text-sphere {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -55,7 +55,12 @@ body {
   font-size: 1em;
 }
 
-/* Change color of each text in sphere on hover */
+@media (max-width: 768px) {
+  .tagcloud {
+    font-size: 0.8em; /* Smaller font size for smaller screens */
+  }
+}
+
 .tagcloud--item {
   color: #006400;
   text-transform: uppercase;
@@ -63,11 +68,10 @@ body {
 
 .float-image-left {
   shape-outside: circle(50%);
-  margin-right: 20px
+  margin-right: 20px;
 }
 
 .float-image-right {
   shape-outside: circle(50%);
-  margin-left: 20px
+  margin-left: 20px;
 }
-
