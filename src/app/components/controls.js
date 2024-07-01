@@ -7,8 +7,15 @@ export async function handleStopConversation(
   messages,
   messageScores,
   setFeedback,
-  disconnect
+  setCompletedFeedback,
+  disconnect,
+  setIsLoading,
+  setMessageConversation // Add setMessageConversation to clear messages
 ) {
+  setIsLoading(true); // Start loading spinner
+  disconnect(); // Disconnect immediately
+  setMessageConversation([]); // Clear message conversation
+
   console.log("Sending messages to backend:", messages);
   try {
     const selectedLanguage =
@@ -37,20 +44,25 @@ export async function handleStopConversation(
     });
 
     setFeedback(response.data.feedback);
+    setCompletedFeedback(true); // Set completed feedback to true after feedback is set
+    setIsLoading(false); // Stop loading spinner
   } catch (error) {
     console.error("An error occurred:", error);
+    setIsLoading(false); // Stop loading spinner in case of error
   }
 
   console.log(localStorage.getItem("selectedLanguage"));
   console.log("Stopping conversation. Sending messages:", messages);
   localStorage.removeItem("selectedLanguage");
-  disconnect();
 }
 
 export default function Controls({
   messages,
   messageScores,
   setFeedback,
+  setCompletedFeedback,
+  setIsLoading,
+  setMessageConversation, // Add setMessageConversation
   feedback
 }) {
   const { connect, disconnect, readyState } = useVoice();
@@ -67,7 +79,10 @@ export default function Controls({
       messages,
       messageScores,
       setFeedback,
-      disconnect
+      setCompletedFeedback, // Pass setCompletedFeedback
+      disconnect,
+      setIsLoading, // Pass setIsLoading
+      setMessageConversation // Pass setMessageConversation
     );
     setIsProcessing(false);
   };

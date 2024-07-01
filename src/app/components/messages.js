@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useVoice } from "@humeai/voice-react";
-import Feedback from "./Feedback";
 import { handleStopConversation } from "./controls";
 
 const getTopTwoScores = (scores) => {
@@ -14,7 +13,7 @@ const getTopTwoScores = (scores) => {
   return allScores.slice(0, 2);
 };
 
-const Messages = ({ messages, setMessageConversation, messageScores, setMessageScores, setFeedback }) => {
+const Messages = ({ messages, setMessageConversation, messageScores, setMessageScores, setFeedback, setIsLoading }) => { // Add setIsLoading
   const { messages: voiceMessages, disconnect } = useVoice();
   const router = useRouter();
   const messagesEndRef = useRef(null);
@@ -57,15 +56,10 @@ const Messages = ({ messages, setMessageConversation, messageScores, setMessageS
   const handleGoBack = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-    handleStopConversation(
-      messages,
-      messageScores,
-      setFeedback,
-      disconnect
-    ).then(() => {
-      setIsProcessing(false);
-      router.push("/language");
-    });
+    disconnect(); // Disconnect immediately
+    setMessageConversation([]); // Clear message conversation
+    router.push("/language");
+    setIsProcessing(false);
   };
 
   return (
