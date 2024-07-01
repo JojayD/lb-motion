@@ -31,12 +31,26 @@ module.exports = {
           '0%': { transform: 'translateX(-60vw)' },
           '100%': { transform: 'translateX(100vw)' },
         },
+        zoomin: {
+          "0%": {
+                    opacity: 0,
+                    transform: "scale3d(0.3, 0.3, 0.3)",
+                  },
+                  "80%": {
+                    opacity: 0.8,
+                    transform: "scale3d(1.1, 1.1, 1.1)",
+                  },
+                  "100%": {
+                    opacity: 1,
+                  },
+        }
       },
       animation: {
         fade: 'fadeIn .3s ease-in-out',
         dropInBounce: 'dropInBounce 2s ease-out',
         slideInLeft: 'slideInLeft 1s ease-out forwards 1.5s',
         float: 'float 15s linear infinite',
+        zoomIn: 'zoomin 1s ease-out forwards 0.5s 1'
       },
     },
   },
