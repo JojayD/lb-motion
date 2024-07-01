@@ -14,7 +14,7 @@ const TextSphere = () => {
 
     const createTagCloud = () => {
       const options = {
-        radius: window.innerWidth < 768 ? 150 : 300, // Adjust radius based on screen width
+        radius: window.innerWidth < 768 ? 200 : 300, // Adjust radius based on screen width
         maxSpeed: "fast",
         initSpeed: "normal",
         keep: true,
