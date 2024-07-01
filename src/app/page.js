@@ -13,16 +13,17 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden" style={{ backgroundColor: '#BCF8D0' }}>
+    <div className="flex flex-col min-h-screen overflow-x-hidden overflow-y-hidden" style={{ backgroundColor: '#BCF8D0' }}>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <Navbar />
       <div className="flex flex-col items-center justify-center flex-grow relative">
         <TextSphere />
-        <div className="absolute z-10 flex flex-col items-center bg-white px-4 py-2 rounded-md bg-opacity-100 mx-6 lg:px-6 lg:py-3 md:px-5 md:py-2 sm:px-4 sm:py-1">
-          <h1 className="font-bold mb-6 lg:text-4xl md:text-3xl sm:text-2xl">Welcome to Lingo AI</h1>
-          <p className="mb-6 lg:text-xl md:text-lg sm:text-base">Improve your fluency today!</p>
+        <div className="relative z-10 flex flex-col items-center bg-white px-4 py-2 rounded-md bg-opacity-100 mx-6 sm:px-4 sm:py-2 md:px-5 md:py-3 lg:px-6 lg:py-4">
+          <h1 className="font-bold mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl">Welcome to Lingo AI</h1>
+          <p className="mb-6 text-base sm:text-lg md:text-xl lg:text-2xl">Improve your fluency today!</p>
           <button
             onClick={handleGetStarted}
-            className="bg-teal-600 text-white rounded-md hover:bg-teal-700 transition duration-300 bg-opacity-100 lg:text-lg lg:px-6 lg:py-3 md:text-md md:px-4 md:py-2 sm:text-sm sm:px-3 sm:py-1"
+            className="bg-teal-600 text-white rounded-md hover:bg-teal-700 transition duration-300 text-sm sm:text-base md:text-lg lg:text-xl px-3 py-1 sm:px-4 sm:py-2 md:px-5 md:py-3 lg:px-6 lg:py-4"
           >
             Get Started
           </button>
