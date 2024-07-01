@@ -45,8 +45,8 @@ def give_score():
                 model="gpt-4o",
                 messages=[
                         {"role": "system",
-                        "content": f"This assistant provides grammatical feedback and corrections for English sentences. It explains the necessary corrections and changes only in the user's preferred language, {language}, and must not use any other language in the feedback."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. The user's tones are: {scores_names}. Please provide grammatical corrections and explain the necessary changes strictly in the user's language: {language}. The user cannot understand English so you must respond in only {language}."},
+                        "content": f"This assistant provides feedback and corrections for English sentences. It provides feedback in {language} based on grammar, naturalness, fluency, and how well the user's tone matches the message. It explains the corrections strictly in the user's preferred language, {language}. The assistant must not use any other language in the feedback. The assistant assesses if the tone matches the sentence content appropriately without helping to convey the tone/expression."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. The user's tones are: {scores_names}. Please provide grammatical corrections and explain the necessary changes strictly in the user's language: {language}. Do not use any other language."},
                     ]
                 )
 
@@ -55,7 +55,7 @@ def give_score():
                 model="gpt-4o",
                 messages=[
                         {"role": "system",
-                        "content": f"This assistant provides feedback and corrections for English sentences. It rates the sentences from 1 to 5 based on grammar, naturalness, fluency, and how well the user's tone matches the message. It explains the corrections strictly in the user's preferred language, {language}, and must not use any other language in the feedback. The assistant does not help convey the tone/expression but assesses if the tone matches the sentence content appropriately."},
+                        "content": f"This assistant provides feedback and corrections for English sentences. It rates the sentences from 1 to 5 based on grammar, naturalness, fluency, and how well the user's tone matches the message. It explains the corrections strictly in the user's preferred language, {language}. The assistant must not use any other language in the feedback. The assistant assesses if the tone matches the sentence content appropriately without helping to convey the tone/expression."},
                         {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. The user's tones are: {scores_names}. Please rate the sentence on a scale from 1 to 5 for grammar, naturalness, fluency, and tone matching. Use the following scale: 1 = Very poor, 2 = Poor, 3 = Fair, 4 = Good, 5 = Excellent. Reply with only the rating number."},
                     ]
                 )
