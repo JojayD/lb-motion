@@ -39,7 +39,7 @@ const TextSphere = () => {
   }, []);
 
   return (
-    <div className="text-sphere overflow-x-hidden">
+    <div className="text-sphere overflow-x-hidden overflow-y-hidden">
       <span className="tagcloud"></span>
     </div>
   );

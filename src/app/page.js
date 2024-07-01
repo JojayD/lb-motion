@@ -13,7 +13,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden" style={{ backgroundColor: '#BCF8D0' }}>
+    <div className="flex flex-col min-h-screen overflow-x-hidden overflow-y-hidden" style={{ backgroundColor: '#BCF8D0' }}>
       <Navbar />
       <div className="flex flex-col items-center justify-center flex-grow">
         <TextSphere />
