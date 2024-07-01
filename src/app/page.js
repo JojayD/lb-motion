@@ -13,11 +13,11 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen overflow-x-hidden overflow-y-hidden" style={{ backgroundColor: '#BCF8D0' }}>
+    <div className="flex flex-col min-h-screen overflow-x-hidden" style={{ backgroundColor: '#BCF8D0' }}>
       <Navbar />
-      <div className="flex flex-col items-center justify-center flex-grow">
+      <div className="flex flex-col items-center justify-center flex-grow relative">
         <TextSphere />
-        <div className="relative z-10 flex flex-col items-center bg-white px-4 py-2 rounded-md bg-opacity-100 mx-6 lg:px-6 lg:py-3 md:px-5 md:py-2 sm:px-4 sm:py-1">
+        <div className="absolute z-10 flex flex-col items-center bg-white px-4 py-2 rounded-md bg-opacity-100 mx-6 lg:px-6 lg:py-3 md:px-5 md:py-2 sm:px-4 sm:py-1">
           <h1 className="font-bold mb-6 lg:text-4xl md:text-3xl sm:text-2xl">Welcome to Lingo AI</h1>
           <p className="mb-6 lg:text-xl md:text-lg sm:text-base">Improve your fluency today!</p>
           <button

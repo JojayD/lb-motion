@@ -14,7 +14,7 @@ const TextSphere = () => {
 
     const createTagCloud = () => {
       const options = {
-        radius: window.innerWidth < 768 ? 200 : 400, // Adjust radius based on screen width
+        radius: window.innerWidth < 768 ? 150 : 300, // Adjust radius based on screen width
         maxSpeed: "fast",
         initSpeed: "normal",
         keep: true,
@@ -39,7 +39,7 @@ const TextSphere = () => {
   }, []);
 
   return (
-    <div className="text-sphere overflow-x-hidden overflow-y-hidden">
+    <div className="text-sphere flex items-center justify-center w-full h-full absolute inset-0">
       <span className="tagcloud"></span>
     </div>
   );
