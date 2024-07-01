@@ -1,42 +1,86 @@
 import React, { useEffect } from "react";
+
+//import "../styles/TextShpere.css";
+
+// Importing TagCloud package
 import TagCloud from "TagCloud";
 
-const TextSphere = () => {
+const TextShpere = () => {
+  // Animation settings for Text Cloud
   useEffect(() => {
-    const container = ".tagcloud";
-    const texts = [
-      "Hello", "Hola", "Bonjour", "안녕하세요", "Kamusta", "你好", "こんにちは",
-      "Xin chào", "Hallo", "Ciao", "Olá", "Здравствуйте", "नमस्ते", "Merhaba",
-      "Sawubona", "Hallo", "Hej", "Ahoj", "Halo", "Salam", "Shalom", "Szia",
-      "Hej", "Pozdravljeni", "مرحبا", "Γειά", "Sawubona", "Tēnā koe", "Dzień dobry",
-      "Sveiki", "Salve", "Kumusta", "Hallo", "Aloha", "Jambo", "Salut", "Molo",
-      "Mingalaba", "Ahoj", "Kaixo", "Terve", "Zdravo", "Zdravei", "Hallo", "Yassou",
-      "Zdravo", "Buna", "Alo"
-    ];
+      const container = ".tagcloud";
+      const texts = [
+        "Hello",       // English
+        "Hola",        // Spanish
+        "Bonjour",     // French
+        "안녕하세요",    // Korean
+        "Kamusta",     // Filipino
+        "你好",          // Chinese (Simplified)
+        "こんにちは",    // Japanese
+        "Xin chào",    // Vietnamese
+        "Hallo",       // German
+        "Ciao",        // Italian
+        "Olá",         // Portuguese
+        "Здравствуйте", // Russian
+        "नमस्ते",        // Hindi
+        "Merhaba",     // Turkish
+        "Sawubona",    // Zulu
+        "Hallo",       // Dutch
+        "Hej",         // Swedish
+        "Ahoj",        // Czech
+        "Halo",        // Indonesian
+        "Salam",       // Persian
+        "Shalom",      // Hebrew
+        "Szia",        // Hungarian
+        "Hej",         // Danish
+        "Pozdravljeni",// Slovenian
+        "مرحبا",        // Arabic
+        "Γειά",         // Greek
+        "Sawubona",    // Zulu
+        "Tēnā koe",    // Maori
+        "Dzień dobry", // Polish
+        "Sveiki",      // Latvian
+        "Salve",       // Latin
+        "Kumusta",     // Cebuano
+        "Hallo",       // Norwegian
+        "Aloha",       // Hawaiian
+        "Jambo",       // Swahili
+        "Salut",       // Romanian
+        "Molo",        // Xhosa
+        "Mingalaba",   // Burmese
+        "Ahoj",        // Slovak
+        "Kaixo",       // Basque
+        "Terve",       // Finnish
+        "Zdravo",      // Serbian
+        "Zdravei",     // Bulgarian
+        "Hallo",       // Luxembourgish
+        "Yassou",      // Greek (informal)
+        "Zdravo",      // Croatian
+        "Buna",        // Moldovan
+        "Alo",         // Haitian Creole
+      ];
 
-    const isMobile = window.innerWidth < 768;
-    const options = {
-      radius: isMobile ? 150 : 300,
-      maxSpeed: "normal",
-      initSpeed: "normal",
-      keep: true,
-    };
+      const options = {
+        radius: 400,
+        maxSpeed: "normal",
+        initSpeed: "normal",
+        keep: true,
+        loop: true,
+        lockX: true,
+        lockY: true,
+      };
 
-    TagCloud(container, texts, options);
-
-    // Adjust text size
-    const tagCloudElements = document.querySelectorAll('.tagcloud span');
-    tagCloudElements.forEach((element) => {
-      element.style.fontSize = isMobile ? '12px' : '20px';
-    });
-
+      TagCloud(container, texts, options);
   }, []);
 
   return (
-    <div className="text-shpere-container flex justify-center items-center h-full w-full">
-      <span className="tagcloud"></span>
-    </div>
+    <>
+      <div className="text-shpere">
+        {/* span tag className must be "tagcloud"  */}
+        <span className="tagcloud"></span>
+      </div>
+    </>
   );
 };
 
-export default TextSphere;
+export default TextShpere;
