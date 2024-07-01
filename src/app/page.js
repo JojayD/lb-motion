@@ -17,7 +17,7 @@ export default function Home() {
       <Navbar />
       <div className="flex flex-col items-center justify-center flex-grow">
         <TextSphere />
-        <div className="relative z-10 flex flex-col items-center bg-white px-6 py-3 rounded-md bg-opacity-100 mx-6">
+        <div className="relative z-10 flex flex-col items-center bg-white lg:px-6 lg:py-3 md:px-5 md:py-2 sm:px-4 sm:px-1 rounded-md bg-opacity-100 mx-6">
           <h1 className="lg:text-4xl font-bold mb-6 md:text-3xl sm:text-2xl">Welcome to Lingo AI</h1>
           <p className="lg:text-xl mb-6 md:text-lg sm:text-xs">Improve your fluency today!</p>
           <button
