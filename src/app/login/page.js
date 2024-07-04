@@ -1,14 +1,14 @@
-// pages/login.js
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../../../backend/firebase/firebaseConfig";
+import { signIn, useSession } from "next-auth/react";
 import Popup from "@/app/pops/popupmesg";
-import Navbar from "../components/Navbar";  // Import the Navbar component
+import Navbar from "@/app/components/Navbar";
+import { auth, signInWithEmailAndPassword } from "../../../backend/firebase/firebaseConfig";
 
 function SignInPage() {
   const router = useRouter();
+  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [popupMessage, setPopupMessage] = useState("");
@@ -16,41 +16,56 @@ function SignInPage() {
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSignUpNow = () => {
-    router.push("/signup"); 
+    router.push("/signup");
   };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("Signed in successfully");
-      setPopupMessage("Signed in successfully");
-      setPopupColor("green");
-      setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-        router.push("/language");
-      }, 500); // Redirect after 2 seconds
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        console.error("Error signing in:", result.error);
+        setPopupMessage("Username or password wrong");
+        setPopupColor("red");
+        setShowPopup(true);
+      } else {
+        setPopupMessage("Signed in successfully");
+        setPopupColor("green");
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          router.push("/language");
+        }, 500);
+      }
     } catch (error) {
       console.error("Error signing in:", error);
-      setPopupMessage("Username or password wrong");
+      setPopupMessage("An unexpected error occurred");
       setPopupColor("red");
       setShowPopup(true);
     }
   };
 
   const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
     try {
-      const userCredential = await signInWithPopup(auth, provider);
-      console.log("Signed in with Google successfully");
-      setPopupMessage("Signed in with Google successfully");
-      setPopupColor("green");
-      setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-        router.push("/language");
-      }, 500); // Redirect after 2 seconds
+      const result = await signIn("google", { redirect: false });
+      if (result?.error) {
+        setPopupMessage("Failed to sign in with Google");
+        setPopupColor("red");
+        setShowPopup(true);
+      } else {
+        setPopupMessage("Signed in with Google successfully");
+        setPopupColor("green");
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          router.push("/language");
+        }, 500);
+      }
     } catch (error) {
       console.error("Error signing in with Google:", error);
       setPopupMessage("Failed to sign in with Google");
@@ -63,14 +78,20 @@ function SignInPage() {
     setShowPopup(false);
   };
 
+  // If the user is already authenticated, redirect to the language page
+  React.useEffect(() => {
+    if (session) {
+      router.push("/language");
+    }
+  }, [session]);
+
   return (
     <div>
-      <Navbar />  {/* Include the Navbar component */}
+      <Navbar />
       <div className="flex flex-col md:flex-row h-screen items-center justify-center p-4 bg-green-200 pt-60 md:pt-16">
-        {/* Login Form */}
         <div className="mx-8">
           <h1 className="text-5xl font-bold text-black text-center opacity-0 animate-slideInLeft">Lingo AI</h1>
-          <img className="h-64 animate-dropInBounce fill-white" src="globe.png" alt="Globe"/>
+          <img className="h-64 animate-dropInBounce fill-white" src="globe.png" alt="Globe" />
         </div>
         <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
           <h2 className="text-2xl font-bold text-black">Welcome back</h2>
@@ -91,10 +112,7 @@ function SignInPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
-            <button
-              type="submit"
-              className="w-full p-3 bg-teal-600 text-white rounded hover:bg-teal-700"
-            >
+            <button type="submit" className="w-full p-3 bg-teal-600 text-white rounded hover:bg-teal-700">
               Sign in
             </button>
             <button
@@ -106,10 +124,7 @@ function SignInPage() {
             </button>
             <p className="mt-4 text-gray-600">
               Don't have an account?{" "}
-              <span
-                className="text-teal-600 cursor-pointer"
-                onClick={handleSignUpNow}
-              >
+              <span className="text-teal-600 cursor-pointer" onClick={handleSignUpNow}>
                 Sign up now
               </span>
             </p>

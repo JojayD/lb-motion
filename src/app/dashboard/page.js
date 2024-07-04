@@ -2,43 +2,50 @@
 import React, { useState, useEffect } from "react";
 import ClientComponent from "../components/clientcomponent";
 import { fetchAccessToken } from "@humeai/voice";
-import LoadingSpinner from "../components/loadingSpinner"; // Import the LoadingSpinner component
+import LoadingSpinner from "../components/loadingSpinner";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import useSessionTimeout from "../hooks/useSessionTimeout";
 
-function Page() {
-	const [accessToken, setAccessToken] = useState(null);
-	const [error, setError] = useState(null);
+function DashboardPage() {
+  const [accessToken, setAccessToken] = useState(null);
+  const [error, setError] = useState(null);
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-	useEffect(() => {
-		async function getSession() {
-			try {
-				const token = await fetchAccessToken({
-					apiKey: process.env.NEXT_PUBLIC_HUME_API_KEY,
-					secretKey: process.env.NEXT_PUBLIC_HUME_SECRET_KEY,
-				});
+  useSessionTimeout(15 * 60 * 1000); // 15 minutes
 
-				if (!token) {
-					throw new Error("Failed to fetch access token.");
-				}
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login");
+    }
+  }, [status, router]);
 
-				setAccessToken(token);
-			} catch (err) {
-				setError(err.message);
-			}
-		}
+  useEffect(() => {
+    async function getSession() {
+      try {
+        const token = await fetchAccessToken({
+          apiKey: process.env.NEXT_PUBLIC_HUME_API_KEY,
+          secretKey: process.env.NEXT_PUBLIC_HUME_SECRET_KEY,
+        });
 
-		getSession();
-	}, []); // The empty array ensures this effect runs only once on mount
+        if (!token) {
+          throw new Error("Failed to fetch access token.");
+        }
 
-	// Conditional rendering based on the state
-	if (error) return <p>Error: {error}</p>;
-	if (!accessToken) return <LoadingSpinner />; // Use LoadingSpinner instead of text
+        setAccessToken(token);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
 
-	return (
-		<>
-			<ClientComponent accessToken={accessToken} />
-			{/* <Record /> */}
-		</>
-	);
+    getSession();
+  }, []);
+
+  if (error) return <p>Error: {error}</p>;
+  if (!accessToken) return <LoadingSpinner />;
+
+  return <ClientComponent accessToken={accessToken} />;
 }
 
-export default Page;
+export default DashboardPage;

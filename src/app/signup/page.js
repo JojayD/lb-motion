@@ -1,12 +1,10 @@
-// pages/signup.js
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { auth } from "../../../backend/firebase/firebaseConfig";
+import { signIn } from "next-auth/react";
+import { auth, createUserWithEmailAndPassword } from "../../../backend/firebase/firebaseConfig";
 import Popup from "@/app/pops/popupmesg";
-import Navbar from "../components/Navbar";  // Import the Navbar component
+import Navbar from "../components/Navbar";
 
 function SignUpPage() {
   const router = useRouter();
@@ -18,7 +16,7 @@ function SignUpPage() {
   const [showPopup, setShowPopup] = useState(false);
 
   const handleSignInNow = () => {
-    router.push("/login"); 
+    router.push("/login");
   };
 
   const handleSignUp = async (e) => {
@@ -32,13 +30,28 @@ function SignUpPage() {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log("Signed up successfully");
-      setPopupMessage("Signed up successfully");
-      setPopupColor("green");
-      setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-        router.push("/language");
-      }, 500); // Redirect after 2 seconds
+
+      // Sign in the user after successful sign-up
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.error) {
+        console.error("Error signing in after sign-up:", result.error);
+        setPopupMessage("Sign up succeeded but sign in failed");
+        setPopupColor("red");
+        setShowPopup(true);
+      } else {
+        setPopupMessage("Signed up successfully");
+        setPopupColor("green");
+        setShowPopup(true);
+        setTimeout(() => {
+          setShowPopup(false);
+          router.push("/language");
+        }, 500);
+      }
     } catch (error) {
       console.error("Error signing up:", error);
       setPopupMessage("Error signing up");
@@ -48,20 +61,12 @@ function SignUpPage() {
   };
 
   const handleGoogleSignUp = async () => {
-    const provider = new GoogleAuthProvider();
     try {
-      const userCredential = await signInWithPopup(auth, provider);
-      console.log("Signed up with Google successfully");
-      setPopupMessage("Signed up with Google successfully");
-      setPopupColor("green");
-      setShowPopup(true);
-      setTimeout(() => {
-        setShowPopup(false);
-        router.push("/language");
-      }, 500); // Redirect after 2 seconds
+      await signIn("google", { callbackUrl: "/language" });
+      // The result handling will be done in the callback route
     } catch (error) {
-      console.error("Error signing up with Google:", error);
-      setPopupMessage("Failed to sign up with Google");
+      console.error("Error initiating Google Sign-In:", error);
+      setPopupMessage("Failed to initiate sign up with Google");
       setPopupColor("red");
       setShowPopup(true);
     }
@@ -73,12 +78,11 @@ function SignUpPage() {
 
   return (
     <div>
-      <Navbar />  {/* Include the Navbar component */}
+      <Navbar />
       <div className="flex flex-col md:flex-row h-screen items-center justify-center p-4 bg-green-200 pt-60 md:pt-16">
-        {/* Sign Up Form */}
         <div className="mx-8">
-          <h1 className="text-5xl font-bold text-black text-center mt-4 md:mt-0 opacity-0 animate-slideInLeft">Lingo AI</h1>
-          <img className="h-64 animate-dropInBounce" src="globe.png" alt="Globe"/>
+          <h1 className="text-5xl font-bold text-black text-center opacity-0 animate-slideInLeft">Lingo AI</h1>
+          <img className="h-64 animate-dropInBounce fill-white" src="globe.png" alt="Globe" />
         </div>
         <div className="flex flex-col items-center gap-6 bg-white p-8 shadow-md rounded-md bg-opacity-80 backdrop-blur-md">
           <h2 className="text-2xl font-bold text-black">Create an account</h2>
@@ -107,10 +111,7 @@ function SignUpPage() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
-            <button
-              type="submit"
-              className="w-full p-3 bg-teal-600 text-white rounded hover:bg-teal-700"
-            >
+            <button type="submit" className="w-full p-3 bg-teal-600 text-white rounded hover:bg-teal-700">
               Sign up
             </button>
             <button
@@ -122,10 +123,7 @@ function SignUpPage() {
             </button>
             <p className="mt-4 text-gray-600">
               Already have an account?{" "}
-              <span
-                className="text-teal-600 cursor-pointer"
-                onClick={handleSignInNow}
-              >
+              <span className="text-teal-600 cursor-pointer" onClick={handleSignInNow}>
                 Sign in
               </span>
             </p>

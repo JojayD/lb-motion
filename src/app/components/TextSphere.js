@@ -8,7 +8,7 @@ const TextSphere = () => {
       "Hello", "Hola", "Bonjour", "안녕하세요", "Kamusta", "你好", "こんにちは", "Xin chào", "Hallo", "Ciao", 
       "Olá", "Здравствуйте", "नमस्ते", "Merhaba", "Sawubona", "Hallo", "Hej", "Ahoj", "Halo", "Salam", 
       "Shalom", "Szia", "Hej", "Pozdravljeni", "مرحبا", "Γειά", "Sawubona", "Tēnā koe", "Dzień dobry", 
-      "Sveiki", "Salve", "Kumusta", "Hallo", "Aloha", "Jambo", "Salut", "Molo", "Mingalaba", "Ahoj", 
+      "Sveiki", "Salve", "Kumusta", "Hallo", "Aloha", "Jambo", "Salut", "Molo", "မင်္ဂလာပါ", "Ahoj", 
       "Kaixo", "Terve", "Zdravo", "Zdravei", "Hallo", "Yassou", "Zdravo", "Buna", "Alo",
     ];
 
