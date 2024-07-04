@@ -42,22 +42,24 @@ def give_score():
                 print(f"SCORES NAMES: {scores_names}")
                 
                 completion = client.chat.completions.create(
-                    model="gpt-4o",  # Make sure to use the correct model identifier
-                    messages=[
+                model="gpt-4o",
+                messages=[
                         {"role": "system",
-                         "content": f"This assistant provides grammatical feedback and corrections for English sentences. It explains the necessary corrections and changes in the user's preferred language, {language}, to enhance understanding and clarity."},
-                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. The user's tones are: {scores_names}. Please provide grammatical corrections and explain the necessary changes in the user's language: {language}."},
+                        "content": f"This assistant provides feedback and corrections for English sentences. It provides feedback in {language} based on grammar, naturalness, fluency, and how well the user's tone matches the message. It explains the corrections strictly in the user's preferred language, {language}. The assistant must not use any other language in the feedback. The assistant assesses if the tone matches the sentence content appropriately without helping to convey the tone/expression."},
+                        {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. The user's tones are: {scores_names}. Please provide grammatical corrections and explain the necessary changes strictly in the user's language: {language}. Do not use any other language."},
                     ]
                 )
 
+
                 completion_2 = client.chat.completions.create(
-                    model="gpt-4o",  # Make sure to use the correct model identifier
-                    messages=[
+                model="gpt-4o",
+                messages=[
                         {"role": "system",
-                         "content": f"This assistant provides feedback and corrections for English sentences. It rates the sentences from 1 to 5 based on grammar, naturalness, fluency, and how well the user's tone matches the message. It explains the corrections in the user's preferred language, {language} to enhance understanding and learning."},
+                        "content": f"This assistant provides feedback and corrections for English sentences. It rates the sentences from 1 to 5 based on grammar, naturalness, fluency, and how well the user's tone matches the message. It explains the corrections strictly in the user's preferred language, {language}. The assistant must not use any other language in the feedback. The assistant assesses if the tone matches the sentence content appropriately without helping to convey the tone/expression."},
                         {"role": "user", "content": f"Here's an English sentence: '{message['content']}'. The user's tones are: {scores_names}. Please rate the sentence on a scale from 1 to 5 for grammar, naturalness, fluency, and tone matching. Use the following scale: 1 = Very poor, 2 = Poor, 3 = Fair, 4 = Good, 5 = Excellent. Reply with only the rating number."},
                     ]
                 )
+
 
                 feedback = completion.choices[0].message.content
                 print(f"initial feedback {feedback}")

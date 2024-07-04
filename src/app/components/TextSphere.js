@@ -1,68 +1,34 @@
 import React, { useEffect } from "react";
-
-//import "../styles/TextShpere.css";
-
-// Importing TagCloud package
 import TagCloud from "TagCloud";
 
-const TextShpere = () => {
-  // Animation settings for Text Cloud
+const TextSphere = () => {
   useEffect(() => {
-      const container = ".tagcloud";
-      const texts = [
-        "Hello",       // English
-        "Hola",        // Spanish
-        "Bonjour",     // French
-        "안녕하세요",    // Korean
-        "Kamusta",     // Filipino
-        "你好",          // Chinese (Simplified)
-        "こんにちは",    // Japanese
-        "Xin chào",    // Vietnamese
-        "Hallo",       // German
-        "Ciao",        // Italian
-        "Olá",         // Portuguese
-        "Здравствуйте", // Russian
-        "नमस्ते",        // Hindi
-        "Merhaba",     // Turkish
-        "Sawubona",    // Zulu
-        "Hallo",       // Dutch
-        "Hej",         // Swedish
-        "Ahoj",        // Czech
-        "Halo",        // Indonesian
-        "Salam",       // Persian
-        "Shalom",      // Hebrew
-        "Szia",        // Hungarian
-        "Hej",         // Danish
-        "Pozdravljeni",// Slovenian
-        "مرحبا",        // Arabic
-        "Γειά",         // Greek
-        "Sawubona",    // Zulu
-        "Tēnā koe",    // Maori
-        "Dzień dobry", // Polish
-        "Sveiki",      // Latvian
-        "Salve",       // Latin
-        "Kumusta",     // Cebuano
-        "Hallo",       // Norwegian
-        "Aloha",       // Hawaiian
-        "Jambo",       // Swahili
-        "Salut",       // Romanian
-        "Molo",        // Xhosa
-        "Mingalaba",   // Burmese
-        "Ahoj",        // Slovak
-        "Kaixo",       // Basque
-        "Terve",       // Finnish
-        "Zdravo",      // Serbian
-        "Zdravei",     // Bulgarian
-        "Hallo",       // Luxembourgish
-        "Yassou",      // Greek (informal)
-        "Zdravo",      // Croatian
-        "Buna",        // Moldovan
-        "Alo",         // Haitian Creole
-      ];
+    const container = ".tagcloud";
+    const texts = [
+      "Hello", "Hola", "Bonjour", "안녕하세요", "Kamusta", "你好", "こんにちは", "Xin chào", "Hallo", "Ciao", 
+      "Olá", "Здравствуйте", "नमस्ते", "Merhaba", "Sawubona", "Hallo", "Hej", "Ahoj", "Halo", "Salam", 
+      "Shalom", "Szia", "Hej", "Pozdravljeni", "مرحبا", "Γειά", "Sawubona", "Tēnā koe", "Dzień dobry", 
+      "Sveiki", "Salve", "Kumusta", "Hallo", "Aloha", "Jambo", "Salut", "Molo", "Mingalaba", "Ahoj", 
+      "Kaixo", "Terve", "Zdravo", "Zdravei", "Hallo", "Yassou", "Zdravo", "Buna", "Alo",
+    ];
+
+    const createTagCloud = () => {
+      let radius;
+      if (window.innerWidth < 640) {
+        radius = 200;
+      } else if (window.innerWidth < 768) {
+        radius = 250;
+      } else if (window.innerWidth < 1024) {
+        radius = 300;
+      } else if (window.innerWidth < 1280) {
+        radius = 350;
+      } else {
+        radius = 400;
+      }
 
       const options = {
-        radius: 400,
-        maxSpeed: "normal",
+        radius,
+        maxSpeed: "fast",
         initSpeed: "normal",
         keep: true,
         loop: true,
@@ -71,16 +37,25 @@ const TextShpere = () => {
       };
 
       TagCloud(container, texts, options);
+    };
+
+    createTagCloud();
+    
+    // Handle screen resizing
+    const handleResize = () => {
+      document.querySelector(container).innerHTML = "";
+      createTagCloud();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
-    <>
-      <div className="text-shpere">
-        {/* span tag className must be "tagcloud"  */}
-        <span className="tagcloud"></span>
-      </div>
-    </>
+    <div className="text-sphere flex items-center justify-center w-full h-full absolute inset-0">
+      <span className="tagcloud"></span>
+    </div>
   );
 };
 
-export default TextShpere;
+export default TextSphere;

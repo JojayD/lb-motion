@@ -3,13 +3,67 @@ import { useVoice, VoiceReadyState } from "@humeai/voice-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+export async function handleStopConversation(
+  messages,
+  messageScores,
+  setFeedback,
+  setCompletedFeedback,
+  disconnect,
+  setIsLoading,
+  setMessageConversation // Add setMessageConversation to clear messages
+) {
+  setIsLoading(true); // Start loading spinner
+  disconnect(); // Disconnect immediately
+  setMessageConversation([]); // Clear message conversation
+
+  console.log("Sending messages to backend:", messages);
+  try {
+    const selectedLanguage =
+      localStorage.getItem("selectedLanguage") || "defaultLanguage"; // Providing a fallback directly here
+    const filteredMessages = messages.map(({ message }, index) => ({
+      role: message?.role || "assistant",
+      content: message?.content,
+      id: `user_message_${index}`,
+    }));
+
+    // Include the top two scores
+    const topScores = [];
+    messages.forEach((msg, index) => {
+      const messageId = `user_message_${index}`;
+      if (messageScores && messageScores[messageId]) {
+        // Check if messageScores and messageScores[messageId] exist
+        topScores.push({ messageId, scores: messageScores[messageId] });
+      }
+    });
+    console.log("Top scores to be sent:", topScores); // Added log
+
+    const response = await axios.post("http://127.0.0.1:8000/receive_text", {
+      messages: filteredMessages,
+      language: selectedLanguage,
+      topScores,
+    });
+
+    setFeedback(response.data.feedback);
+    setCompletedFeedback(true); // Set completed feedback to true after feedback is set
+    setIsLoading(false); // Stop loading spinner
+  } catch (error) {
+    console.error("An error occurred:", error);
+    setIsLoading(false); // Stop loading spinner in case of error
+  }
+
+  console.log(localStorage.getItem("selectedLanguage"));
+  console.log("Stopping conversation. Sending messages:", messages);
+  localStorage.removeItem("selectedLanguage");
+}
+
 export default function Controls({
   messages,
   messageScores,
-  onStop,
   setFeedback,
-  feedback,
   setCompletedFeedback,
+  setIsLoading,
+  setMessageConversation, // Add setMessageConversation
+  feedback
 }) {
   const { connect, disconnect, readyState } = useVoice();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -18,60 +72,26 @@ export default function Controls({
     console.log("Feedback updated:", feedback);
   }, [feedback]);
 
-  const sendMessagesToBackend = async (messages) => {
-    setIsProcessing(false);
-
-    console.log("Sending messages to backend:", messages);
-    try {
-      const selectedLanguage =
-        localStorage.getItem("selectedLanguage") || "defaultLanguage"; // Providing a fallback directly here
-      const filteredMessages = messages
-        .map(({ message }, index) => ({
-          role: message?.role || "assistant", 
-          content: message?.content,
-          id: `user_message_${index}`
-        }));
-
-      // Include the top two scores
-      const topScores = [];
-      messages.forEach((msg, index) => {
-        const messageId = `user_message_${index}`;
-        if (messageScores && messageScores[messageId]) { // Check if messageScores and messageScores[messageId] exist
-          topScores.push({ messageId, scores: messageScores[messageId] });
-        }
-      });
-      console.log("Top scores to be sent:", topScores); // Added log
-
-      const response = await axios.post("http://127.0.0.1:8000/receive_text", {
-        messages: filteredMessages,
-        language: selectedLanguage,
-        topScores,
-      });
-
-      setFeedback(response.data.feedback);
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
-  };
-
-  const handleStopConversation = () => {
+  const handleEndConversation = () => {
     if (isProcessing) return;
     setIsProcessing(true);
-
-    sendMessagesToBackend(messages);
-    console.log(localStorage.getItem("selectedLanguage"));
-    console.log("Stopping conversation. Sending messages:", messages);
-    localStorage.removeItem("selectedLanguage");
-    setCompletedFeedback(true);
-    disconnect();
-    // onStop();
+    handleStopConversation(
+      messages,
+      messageScores,
+      setFeedback,
+      setCompletedFeedback, // Pass setCompletedFeedback
+      disconnect,
+      setIsLoading, // Pass setIsLoading
+      setMessageConversation // Pass setMessageConversation
+    );
+    setIsProcessing(false);
   };
 
   if (readyState === VoiceReadyState.OPEN) {
     return (
       <div className="fixed bottom-4 right-4">
         <button
-          onClick={handleStopConversation}
+          onClick={handleEndConversation}
           className="cursor-pointer transition-all 
 bg-gray-700 text-white px-6 py-2 rounded-lg
 border-red-400

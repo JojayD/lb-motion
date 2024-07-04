@@ -42,6 +42,9 @@ function Feedback({ setCompletedFeedback, feedback }) {
 
   return (
     <div className="p-4">
+      <h3 className="text-3xl font-semibold mb-4 text-black text-center">
+        Feedback:
+      </h3>
       <div className="flex flex-col items-center space-y-4">
         {feedback.map((msg, idx) => (
           <div key={idx} className="w-full max-w-md p-4 border border-gray-300 rounded-lg shadow-md bg-white">

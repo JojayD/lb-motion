@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from "react";
 import ClientComponent from "../components/clientcomponent";
 import { fetchAccessToken } from "@humeai/voice";
-// import Record from "@/components/Record";
+import LoadingSpinner from "../components/loadingSpinner"; // Import the LoadingSpinner component
+
 function Page() {
 	const [accessToken, setAccessToken] = useState(null);
 	const [error, setError] = useState(null);
@@ -30,7 +31,7 @@ function Page() {
 
 	// Conditional rendering based on the state
 	if (error) return <p>Error: {error}</p>;
-	if (!accessToken) return <p>Loading...</p>;
+	if (!accessToken) return <LoadingSpinner />; // Use LoadingSpinner instead of text
 
 	return (
 		<>
