@@ -12,41 +12,48 @@ export async function handleStopConversation(
   setIsLoading,
   setMessageConversation // Add setMessageConversation to clear messages
 ) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL
   setIsLoading(true); // Start loading spinner
   disconnect(); // Disconnect immediately
   setMessageConversation([]); // Clear message conversation
 
   console.log("Sending messages to backend:", messages);
   try {
-    const selectedLanguage =
-      localStorage.getItem("selectedLanguage") || "defaultLanguage"; // Providing a fallback directly here
-    const filteredMessages = messages.map(({ message }, index) => ({
-      role: message?.role || "assistant",
-      content: message?.content,
-      id: `user_message_${index}`,
-    }));
+			const selectedLanguage =
+				localStorage.getItem("selectedLanguage") || "defaultLanguage"; // Providing a fallback directly here
+			const filteredMessages = messages.map(({ message }, index) => ({
+				role: message?.role || "assistant",
+				content: message?.content,
+				id: `user_message_${index}`,
+			}));
 
-    // Include the top two scores
-    const topScores = [];
-    messages.forEach((msg, index) => {
-      const messageId = `user_message_${index}`;
-      if (messageScores && messageScores[messageId]) {
-        // Check if messageScores and messageScores[messageId] exist
-        topScores.push({ messageId, scores: messageScores[messageId] });
-      }
-    });
-    console.log("Top scores to be sent:", topScores); // Added log
+			// Include the top two scores
+			const topScores = [];
+			messages.forEach((msg, index) => {
+				const messageId = `user_message_${index}`;
+				if (messageScores && messageScores[messageId]) {
+					// Check if messageScores and messageScores[messageId] exist
+					topScores.push({ messageId, scores: messageScores[messageId] });
+				}
+			});
+			console.log("Top scores to be sent:", topScores); // Added log
 
-    const response = await axios.post("http://127.0.0.1:8000/receive_text", {
-      messages: filteredMessages,
-      language: selectedLanguage,
-      topScores,
-    });
+			// const response = await axios.post("http://127.0.0.1:8000/receive_text", {
+			//   messages: filteredMessages,
+			//   language: selectedLanguage,
+			//   topScores,
+			// });
+			const response = await axios.post(`${apiUrl}/receive_text`, {
+			  messages: filteredMessages,
+			  language: selectedLanguage,
+			  topScores,
+			});
+			//
 
-    setFeedback(response.data.feedback);
-    setCompletedFeedback(true); // Set completed feedback to true after feedback is set
-    setIsLoading(false); // Stop loading spinner
-  } catch (error) {
+			https: setFeedback(response.data.feedback);
+			setCompletedFeedback(true); // Set completed feedback to true after feedback is set
+			setIsLoading(false); // Stop loading spinner
+		} catch (error) {
     console.error("An error occurred:", error);
     setIsLoading(false); // Stop loading spinner in case of error
   }
