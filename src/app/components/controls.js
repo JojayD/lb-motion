@@ -12,7 +12,7 @@ export async function handleStopConversation(
   setIsLoading,
   setMessageConversation // Add setMessageConversation to clear messages
 ) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
+  // const apiUrl = process.env.NEXT_PUBLIC_API_URL
   setIsLoading(true); // Start loading spinner
   disconnect(); // Disconnect immediately
   setMessageConversation([]); // Clear message conversation
@@ -43,7 +43,7 @@ export async function handleStopConversation(
 			//   language: selectedLanguage,
 			//   topScores,
 			// });
-			const response = await axios.post(`${apiUrl}/receive_text`, {
+			const response = await axios.post(`https://backend-young-haze-7759.fly.dev/receive_text`, {
 			  messages: filteredMessages,
 			  language: selectedLanguage,
 			  topScores,
