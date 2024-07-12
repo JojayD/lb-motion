@@ -220,7 +220,6 @@ const flagUrls = [
 	"km.svg",
 	"kn.svg",
 	"kongo.svg",
-	"kp.svg",
 	"kr.svg",
 	"kw.svg",
 	"ky.svg",

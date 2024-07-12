@@ -250,7 +250,7 @@ function UserChatsPage() {
 												onClick={() => saveTitle(id)}
 												className='ml-2'
 											>
-												<img src="/checkmark.png" alt="Save" className='w-6 h-6'/>
+												<img src="/checkmark.png" alt="Save" className='w-10 h-10'/>
 											</button>
 										</div>
 									) : (
