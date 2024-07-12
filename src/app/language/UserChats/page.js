@@ -250,7 +250,7 @@ function UserChatsPage() {
 												onClick={() => saveTitle(id)}
 												className='ml-2'
 											>
-												<img src="/checkmark.png" alt="Save" className='w-10 h-10'/>
+												<img src="/checkmark.png" alt="Save" className='w-6 h-6'/>
 											</button>
 										</div>
 									) : (
@@ -289,29 +289,31 @@ function UserChatsPage() {
 				</div>
 				<div className='space-y-4'>
 					{userConversations.length > 0 ? (
-						userConversations.map((conversation, index) => (
-							<div
-								key={index}
-								className={`mb-2 flex ${
-									conversation.message && conversation.message.role === "user"
-										? "justify-end"
-										: "justify-start"
-								} mx-2`}
-							>
+						userConversations
+							.filter(conversation => conversation.message && conversation.message.content !== "No content")
+							.map((conversation, index) => (
 								<div
-									className={`max-w-lg w-full p-4 rounded-lg shadow-2xl animate-fade ${
+									key={index}
+									className={`mb-2 flex ${
 										conversation.message && conversation.message.role === "user"
-											? "bg-green-500 text-white"
-											: "bg-blue-500 text-white"
-									}`}
+											? "justify-end"
+											: "justify-start"
+									} mx-2`}
 								>
-									<strong>{conversation.message && conversation.message.role === "user" ? "You:" : "AI:"}</strong>
-									<div className='ml-2'>
-										{conversation.message && conversation.message.content ? conversation.message.content : "No content"}
+									<div
+										className={`max-w-lg w-full p-4 rounded-lg shadow-2xl animate-fade ${
+											conversation.message && conversation.message.role === "user"
+												? "bg-green-500 text-white"
+												: "bg-blue-500 text-white"
+										}`}
+									>
+										<strong>{conversation.message && conversation.message.role === "user" ? "You:" : "AI:"}</strong>
+										<div className='ml-2'>
+											{conversation.message && conversation.message.content ? conversation.message.content : "No content"}
+										</div>
 									</div>
 								</div>
-							</div>
-						))
+							))
 					) : (
 						<p>No messages in this conversation.</p>
 					)}
