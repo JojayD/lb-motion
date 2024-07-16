@@ -20,9 +20,11 @@
 		"jsonwebtoken": "^9.0.2",
 		"next": "14.2.4",
 		"next-auth": "^4.24.7",
+		"pixi.js": "^8.2.5",
 		"react": "^18",
 		"react-dom": "^18",
 		"react-toastify": "^10.0.5",
+		"react-type-animation": "^3.2.0",
 		"react-virtualized": "^9.22.5",
 		"TagCloud": "^2.5.0"
 	},
