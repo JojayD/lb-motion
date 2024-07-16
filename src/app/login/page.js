@@ -123,6 +123,7 @@ function SignInPage() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							className='w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500'
+							autocomplete="email"
 						/>
 						<input
 							type='password'
