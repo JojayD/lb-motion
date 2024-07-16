@@ -131,6 +131,7 @@ function SignInPage() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							className='w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500'
+							autocomplete="current-password"
 						/>
 						<button
 							type='submit'
