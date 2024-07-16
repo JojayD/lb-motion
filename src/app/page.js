@@ -1,5 +1,5 @@
 "use client";
-
+//TODO add secenerios for the user to choose from
 import React from "react";
 import Navbar from './components/Navbar';  // Adjust the import path if needed
 import { useRouter } from 'next/navigation';
