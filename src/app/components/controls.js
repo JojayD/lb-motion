@@ -41,20 +41,15 @@ export async function handleStopConversation(
 		});
 		console.log("Top scores to be sent:", topScores); // Added log
 
-		const response = await axios.post("http://127.0.0.1:8000/receive_text", {
-			messages: filteredMessages,
-			language: selectedLanguage,
-			topScores,
-		});
-		// const response = await axios.post(
-		// 	`https://backend-young-haze-7759.fly.dev/receive_text`,
-		// 	{
-		// 		messages: filteredMessages,
-		// 		language: selectedLanguage,
-		// 		topScores,
-		// 	}
-		// );
-		//
+		const response = await axios.post(
+			`${process.env.NEXT_PUBLIC_API_URL}/receive_text`,
+			{
+				messages: filteredMessages,
+				language: selectedLanguage,
+				topScores,
+			}
+		);
+		
 
 		https: setFeedback(response.data.feedback);
 		setCompletedFeedback(true); // Set completed feedback to true after feedback is set
