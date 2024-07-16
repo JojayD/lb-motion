@@ -383,7 +383,6 @@ const flagUrls = [
 	"us-mo.svg",
 	"us-mp.svg",
 	"us-ms.svg",
-	"us-nc.svg",
 	"us-nm.svg",
 	"us-or.svg",
 	"us-pr.svg",
