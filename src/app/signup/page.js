@@ -112,6 +112,7 @@ function SignUpPage() {
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
 							className='w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500'
+							autocomplete="email"
 						/>
 						<input
 							type='password'
@@ -120,6 +121,7 @@ function SignUpPage() {
 							value={password}
 							onChange={(e) => setPassword(e.target.value)}
 							className='w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500'
+							autocomplete="new-password"
 						/>
 						<input
 							type='password'
@@ -128,6 +130,7 @@ function SignUpPage() {
 							value={confirmPassword}
 							onChange={(e) => setConfirmPassword(e.target.value)}
 							className='w-72 p-3 bg-gray-200 text-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500'
+							autocomplete="new-password"
 						/>
 						<button
 							type='submit'
