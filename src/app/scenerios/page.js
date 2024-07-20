@@ -26,10 +26,10 @@ function Scenarios() {
 				<div className='flex flex-row'>
 					<div className='flex flex-col gap-2 rounded-r-xl rounded-tl-xl bg-slate-100 p-4 text-slate-700 md:max-w-[60%] dark:bg-slate-800 dark:text-slate-300'>
 						<span className='font-semibold text-black dark:text-white'>Sharky</span>
-						{index > 0 && <span>Question {}</span>}
+						{currentIndex > 0 && <span>Question {currentIndex}</span>}
 						<TypeAnimation
 							key={currentIndex} // Add key to re-render
-							sequence={([prompts[currentIndex]])} // Use state value directly
+							sequence={[prompts[currentIndex]]} // Use state value directly
 							wrapper='span'
 							cursor={false}
 							style={{ fontSize: "1rem", display: "inline-block" }}
